@@ -9,7 +9,7 @@ import PlayBadge from '../components/PlayBadge.astro';
     <div class="hero-header reveal">
       <div class="hero-badge mono">
         <span class="rec-dot"></span>
-        <span>CONTROL ROOM ARCHITECTURE · ANDROID TV</span>
+        <span>FOR SHOPS, OFFICES & HOMES WITH A DVR</span>
       </div>
 
       <h1 id="hero-title" class="display-title hero-title">
@@ -17,18 +17,18 @@ import PlayBadge from '../components/PlayBadge.astro';
       </h1>
 
       <p class="hero-subtitle">
-        Turn any Android TV into a dedicated multi-camera CCTV wall. DeckTV boots straight into your live camera grid when powered on — no remote or cloud account needed.
+        DeckTV replaces your Android TV's home screen. Switch the TV on and it opens straight into your DVR's live cameras. Nothing to tap, no cloud account, no phone app.
       </p>
 
       <div class="hero-ctas">
         <PlayBadge app="decktv" size="lg" variant="badge" />
-        <PlayBadge app="deckcam" size="md" variant="pill" />
+        <a class="hero-alt" href="/deckcam">Phone, tablet or TV box? See DeckCam →</a>
       </div>
 
       <div class="hero-meta mono">
         <span>Tested on Mi TV 4A Pro</span>
         <span class="dot-sep">·</span>
-        <span>1 GB RAM TVs Supported</span>
+        <span>Runs on 1 GB RAM TVs</span>
         <span class="dot-sep">·</span>
         <span>Android 9+</span>
       </div>
@@ -179,6 +179,15 @@ import PlayBadge from '../components/PlayBadge.astro';
     color: var(--text-dim);
     max-width: 68ch;
   }
+
+  .hero-alt {
+    color: var(--text-dim, #9aa3af);
+    font-size: 0.9375rem;
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 2px;
+  }
+  .hero-alt:hover { color: var(--accent); border-color: var(--accent); }
 
   .hero-ctas {
     display: flex;

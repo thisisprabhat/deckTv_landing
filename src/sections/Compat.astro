@@ -2,61 +2,93 @@
 import Section from '../components/Section.astro';
 
 const BRANDS = [
-  { name: 'Hikvision', type: 'DVR / NVR / IP Cam', path: 'ISAPI & RTSP' },
-  { name: 'HiLook', type: 'OEM Hikvision', path: 'RTSP ch101/ch102' },
-  { name: 'LTS', type: 'OEM Hikvision', path: 'RTSP Streaming' },
-  { name: 'Annke', type: 'RTSP Compatible', path: 'Sub & Main Stream' },
-  { name: 'Dahua', type: 'DVR / NVR / XVR', path: 'RPC & RTSP :554' },
-  { name: 'CP Plus', type: 'Orange / Indigo DVR', path: 'cam/realmonitor' },
-  { name: 'Amcrest', type: 'IP Cameras & NVR', path: 'RTSP Direct' },
-  { name: 'Lorex', type: '4K Security NVR', path: 'Multi-channel RTSP' },
-  { name: 'Uniview (UNV)', type: 'NVR & IPC', path: 'unicore RTSP' },
-  { name: 'TVT / Provision', type: 'H.264 / H.265 DVR', path: 'ch01 / ch02' },
-  { name: 'XMEye / Xiongmai', type: 'NetSurveillance DVR', path: 'RTSP port 554' },
-  { name: 'Generic RTSP', type: 'Any IP Camera', path: 'Custom URI templates' },
+  { name: 'Hikvision', type: 'DVR / NVR / IP Cam', path: 'ISAPI & RTSP', main: '/Streaming/Channels/{ch}01', sub: '/Streaming/Channels/{ch}02' },
+  { name: 'HiLook', type: 'OEM Hikvision', path: 'RTSP ch101/ch102', main: '/Streaming/Channels/{ch}01', sub: '/Streaming/Channels/{ch}02' },
+  { name: 'LTS', type: 'OEM Hikvision', path: 'RTSP Streaming', main: '/Streaming/Channels/{ch}01', sub: '/Streaming/Channels/{ch}02' },
+  { name: 'Annke', type: 'RTSP Compatible', path: 'Sub & Main Stream', main: '/Streaming/Channels/{ch}01', sub: '/Streaming/Channels/{ch}02' },
+  { name: 'Dahua', type: 'DVR / NVR / XVR', path: 'RPC & RTSP :554', main: '/cam/realmonitor?channel={ch}&subtype=0', sub: '/cam/realmonitor?channel={ch}&subtype=1' },
+  { name: 'CP Plus', type: 'Orange / Indigo DVR', path: 'cam/realmonitor', main: '/cam/realmonitor?channel={ch}&subtype=0', sub: '/cam/realmonitor?channel={ch}&subtype=1' },
+  { name: 'Amcrest', type: 'IP Cameras & NVR', path: 'RTSP Direct', main: '/cam/realmonitor?channel={ch}&subtype=0', sub: '/cam/realmonitor?channel={ch}&subtype=1' },
+  { name: 'Lorex', type: '4K Security NVR', path: 'Multi-channel RTSP', main: '/cam/realmonitor?channel={ch}&subtype=0', sub: '/cam/realmonitor?channel={ch}&subtype=1' },
+  { name: 'Uniview (UNV)', type: 'NVR & IPC', path: 'unicore RTSP', main: '/unicast/c{ch}/s0/live', sub: '/unicast/c{ch}/s1/live' },
+  { name: 'TVT / Provision', type: 'H.264 / H.265 DVR', path: 'ch01 / ch02', main: '/chID={ch}&streamType=main', sub: '/chID={ch}&streamType=sub' },
+  { name: 'XMEye / Xiongmai', type: 'NetSurveillance DVR', path: 'RTSP port 554', main: '/user={user}&password={pass}&channel={ch}&stream=0.sdp', sub: '/user={user}&password={pass}&channel={ch}&stream=1.sdp' },
+  { name: 'Generic RTSP', type: 'Any IP Camera', path: 'Custom URI templates', main: '', sub: '' },
 ];
 ---
 
 <Section
   id="compatibility"
-  eyebrow="CROSS-BRAND INTEROPERABILITY"
-  title="Plug into the security hardware you already own"
-  lede="No need to rip and replace existing cameras or buy vendor-locked subscriptions. DeckTV connects directly to industry-standard RTSP endpoints."
+  eyebrow="COMPATIBILITY"
+  title="Works with the DVR you already have"
+  lede="Pick your brand and DeckTV fills in the stream addresses and finds your channels. Anything else works over RTSP."
   containerWidth="wide"
 >
   <div class="brands-grid reveal">
-    {BRANDS.map((brand) => (
-      <div class="brand-item card">
+    {BRANDS.map((brand, i) => (
+      <button type="button" class="brand-item card" data-main={brand.main} data-sub={brand.sub} data-name={brand.name} aria-pressed={i === 0 ? 'true' : 'false'}>
         <div class="brand-top">
           <span class="brand-title mono">{brand.name}</span>
-          <span class="brand-protocol mono">{brand.path}</span>
         </div>
         <span class="brand-subtitle">{brand.type}</span>
-      </div>
+      </button>
     ))}
   </div>
 
-  <div class="protocol-bar card reveal">
-    <div class="protocol-item mono">
-      <span class="proto-key">RTSP TRANSPORT:</span>
-      <span class="proto-val">TCP / UDP Interleaved</span>
+  <div class="try card reveal" aria-live="polite">
+    <div class="try-head">
+      <span class="mono try-label">STREAM ADDRESSES FOR <b id="try-brand">Hikvision</b></span>
+      <span class="try-ch mono">
+        Channel
+        <button type="button" id="ch-dec" aria-label="Previous channel">−</button>
+        <output id="ch-val">3</output>
+        <button type="button" id="ch-inc" aria-label="Next channel">+</button>
+      </span>
     </div>
-    <div class="protocol-item mono">
-      <span class="proto-key">CODECS:</span>
-      <span class="proto-val">H.264 / AVC · H.265 / HEVC</span>
-    </div>
-    <div class="protocol-item mono">
-      <span class="proto-key">AUTO-DISCOVERY:</span>
-      <span class="proto-val">Active Channel Probe</span>
-    </div>
-    <div class="protocol-item mono">
-      <span class="proto-key">SECURITY:</span>
-      <span class="proto-val">Digest & Basic Auth · HTTPS</span>
-    </div>
+    <div class="try-row"><span class="mono try-k">Grid (SD)</span><code id="try-sub"></code></div>
+    <div class="try-row"><span class="mono try-k">Full view (HD)</span><code id="try-main"></code></div>
+    <p class="try-note" id="try-note">Pick your brand and DeckTV builds these for every channel. Nothing to type.</p>
   </div>
+
 </Section>
 
+<script>
+  const items = document.querySelectorAll<HTMLButtonElement>('.brand-item');
+  const $ = (id: string) => document.getElementById(id)!;
+  let ch = 3;
+  let cur = items[0];
+  function render() {
+    const main = cur.dataset.main || '', sub = cur.dataset.sub || '';
+    const fill = (t: string) => 'rtsp://dvr:554' + t.replace('{ch}', String(ch)).replace('{user}', 'user').replace('{pass}', '••••');
+    $('try-brand').textContent = cur.dataset.name || '';
+    $('ch-val').textContent = String(ch);
+    $('try-main').textContent = main ? fill(main) : 'You enter the address yourself';
+    $('try-sub').textContent = sub ? fill(sub) : 'e.g. rtsp://camera:554/stream1';
+    $('try-note').textContent = main
+      ? 'Grids use the light SD stream; opening a camera full screen switches to HD, falling back to SD if the DVR refuses.'
+      : 'Generic RTSP: paste any stream address, with {ch} where the channel number goes.';
+  }
+  items.forEach((b) => b.addEventListener('click', () => { items.forEach((x) => x.setAttribute('aria-pressed', String(x === b))); cur = b; render(); }));
+  $('ch-dec').addEventListener('click', () => { ch = Math.max(1, ch - 1); render(); });
+  $('ch-inc').addEventListener('click', () => { ch = Math.min(64, ch + 1); render(); });
+  render();
+</script>
+
 <style>
+  .brand-item { text-align: left; cursor: pointer; font: inherit; color: inherit; }
+  .brand-item[aria-pressed='true'] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+  .try { padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+  .try-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; font-size: 0.8125rem; }
+  .try-label b { color: var(--accent); }
+  .try-ch { display: inline-flex; align-items: center; gap: 0.5rem; }
+  .try-ch button { width: 2rem; height: 2rem; border-radius: 8px; border: 1px solid var(--rule); background: var(--surface); color: inherit; cursor: pointer; }
+  .try-ch button:hover { border-color: var(--accent); }
+  .try-row { display: grid; grid-template-columns: 8.5rem 1fr; gap: 0.75rem; align-items: center; }
+  .try-k { font-size: 0.75rem; opacity: 0.7; }
+  .try code { font-family: var(--font-mono, monospace); font-size: 0.875rem; overflow-wrap: anywhere; }
+  .try-note { margin: 0; font-size: 0.875rem; opacity: 0.75; }
+  @media (max-width: 560px) { .try-row { grid-template-columns: 1fr; gap: 0.25rem; } }
+
   .brands-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));

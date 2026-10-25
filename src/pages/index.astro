@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../sections/Hero.astro';
 import BootToCamera from '../sections/BootToCamera.astro';
-import Problems from '../sections/Problems.astro';
 import Bento from '../sections/Bento.astro';
 import Remote from '../sections/Remote.astro';
 import Compat from '../sections/Compat.astro';
@@ -32,13 +31,12 @@ const jsonLd = [
 
 <Base
   title="DeckTV — Android TV Launcher & Live CCTV Control Room"
-  description="Turn any Android TV into a live CCTV wall. DeckTV boots straight into your cameras — Hikvision, Dahua, CP Plus, RTSP. No cloud, no remote needed."
+  description="DeckTV is a clean Android TV home screen that opens straight into your DVR's cameras when the TV turns on. Hikvision, Dahua, CP Plus and RTSP. Local only, no cloud account."
   path="/"
   jsonLd={jsonLd}
 >
   <Hero />
   <BootToCamera />
-  <Problems />
   <Bento />
   <Remote />
   <Compat />
@@ -46,9 +44,9 @@ const jsonLd = [
   <Specs />
   <Section
     id="faq"
-    eyebrow="FREQUENTLY ASKED QUESTIONS"
-    title="Got questions? We've got answers."
-    lede="Everything you need to know about setting up DeckTV, DVR compatibility, and boot-to-camera."
+    eyebrow="FAQ"
+    title="Before you install"
+    lede="DVR compatibility, boot-to-camera, and what happens to your TV's own home screen."
   >
     <Faq faqs={FAQS} />
   </Section>

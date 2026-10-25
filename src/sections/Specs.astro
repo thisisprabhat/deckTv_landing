@@ -3,21 +3,21 @@ import Section from '../components/Section.astro';
 
 const SPECS = [
   { label: 'Operating System', value: 'Android TV 9.0+ · Android 9.0+ (Phones & Tablets for DeckCam)' },
-  { label: 'Hardware Baseline', value: '1 GB RAM Smart TVs (Mi TV 4A Pro, Realme TV, TCL, Chromecast with Google TV)' },
-  { label: 'Video Subsystem', value: 'Hardened Media3 RTSP client with TCP interleaved & UDP transport' },
-  { label: 'Supported Codecs', value: 'H.264 / AVC, H.265 / HEVC hardware-accelerated video decoding' },
+  { label: 'Hardware Baseline', value: 'Designed for 1 GB RAM TVs. Tested on a Mi TV 4A Pro.' },
+  { label: 'Video Subsystem', value: 'RTSP over TCP or UDP, Digest and Basic auth, optional HTTPS' },
+  { label: 'Supported Codecs', value: 'H.264 and H.265, decoded by the TV hardware decoder' },
   { label: 'Stream Routing', value: 'Sub-stream SD decoding for multi-camera grids · Main HD stream for single focus' },
   { label: 'Snapshot Output', value: 'Lossless PNG format saved locally to /storage/emulated/0/Pictures/CamDeck' },
-  { label: 'Data Security', value: 'Android Keystore hardware-backed encryption · Zero cloud brokers or telemetry' },
+  { label: 'Data Security', value: 'DVR password encrypted with an Android Keystore key · no cloud, no accounts' },
   { label: 'Package IDs', value: 'DeckTV: com.waygosquad.decktv · DeckCam: com.waygosquad.deckcam' },
 ];
 ---
 
 <Section
   id="specs"
-  eyebrow="TECHNICAL SPECIFICATIONS"
-  title="Engineered for reliability on low-cost hardware"
-  lede="Purpose-built to deliver smooth surveillance feeds on everyday smart TVs without stuttering or memory leaks."
+  eyebrow="SPECS"
+  title="The details"
+  lede="What it needs and how it handles your video."
 >
   <div class="specs-table card reveal">
     <dl class="specs-list">

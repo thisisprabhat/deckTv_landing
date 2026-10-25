@@ -1,11 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 108" width="1120" height="216">
   <style>@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;600&amp;display=swap');text{font-family:Outfit,system-ui,sans-serif;font-size:66px}</style>
-  <g>  <rect width="108" height="108" rx="24" fill="#101318"/>
-  <rect x="20" y="34" width="46" height="40" rx="7" fill="#5AC8FA"/>
-  <path d="M70 54l18-11v22z" fill="#5AC8FA"/>
-  <circle cx="43" cy="54" r="13" fill="#101318"/>
-  <circle cx="43" cy="54" r="6" fill="#5AC8FA"/>
-  <circle cx="45" cy="52" r="2.1" fill="#fff" fill-opacity=".9"/>
-  <circle cx="25.7" cy="39.7" r="3.4" fill="#FF453A"/></g>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1E2836"/><stop offset="1" stop-color="#090B0F"/></linearGradient></defs>
+  <rect width="108" height="108" rx="24.3" fill="url(#bg)"/>
+  <rect x="15" y="22" width="78" height="54" rx="10" fill="#323A47" stroke="#6E7C8E" stroke-width=".6"/>
+  <rect x="19" y="26" width="70" height="46" rx="7" fill="#080A0E"/>
+  <rect x="21" y="28" width="32.5" height="20.5" rx="4" fill="#F4F8FC"/>
+  <rect x="19.8" y="26.8" width="34.9" height="22.9" rx="5" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width=".8"/>
+  <rect x="55.5" y="28" width="32.5" height="20.5" rx="4" fill="#4DB8F5"/>
+  <rect x="21" y="50.5" width="32.5" height="20.5" rx="4" fill="#4DB8F5"/>
+  <rect x="55.5" y="50.5" width="32.5" height="20.5" rx="4" fill="#2F8FE0"/>
+  <circle cx="82.5" cy="33.5" r="2.6" fill="#FF453A"/>
+  <rect x="40" y="79.5" width="28" height="4" rx="2" fill="#6E7C8E"/>
   <text x="130" y="76" fill="#F2F4F7" font-weight="300">Deck<tspan fill="#5AC8FA" font-weight="600">TV</tspan></text>
 </svg>

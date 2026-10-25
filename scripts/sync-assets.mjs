@@ -150,7 +150,7 @@ if (fs.existsSync(grid9Path)) {
 // 6. Generate crisp OG Images
 const escapeXml = (str) => str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-const renderOg = async (title, subtitle, filename) => {
+const renderOg = async (title, subtitle, filename, iconFile = path.join(ASSETS_SRC, 'branding', 'icon-256.png')) => {
   const width = 1200;
   const height = 630;
   const safeTitle = escapeXml(title);
@@ -177,14 +177,16 @@ const renderOg = async (title, subtitle, filename) => {
     </g>
   </svg>`;
 
+  const mark = await sharp(iconFile).resize(200, 200).toBuffer();
   await sharp(Buffer.from(ogSvg))
+    .composite([{ input: mark, left: 900, top: 150 }])
     .png()
     .toFile(`public/og/${filename}`);
   console.log(`Generated OG: ${filename}`);
 };
 
 await renderOg('DeckTV', 'Turn any Android TV into a live CCTV wall.', 'og-decktv.png');
-await renderOg('DeckCam', 'Dedicated CCTV & DVR viewer for Android TV & mobile.', 'og-deckcam.png');
+await renderOg('DeckCam', 'Dedicated CCTV & DVR viewer for Android TV & mobile.', 'og-deckcam.png', 'public/icons/deckcam-icon-512.png');
 await renderOg('DeckTV Features', 'Complete specifications, layouts and remote controls.', 'og-features.png');
 await renderOg('Privacy Policy', '100% Local · No Accounts · Keystore Encrypted.', 'og-privacy.png');
 
