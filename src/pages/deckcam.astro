@@ -5,6 +5,7 @@ import TvFrame from '../components/TvFrame.astro';
 import PlayBadge from '../components/PlayBadge.astro';
 import Faq from '../components/Faq.astro';
 import HairlineFigure from '../components/HairlineFigure.astro';
+import Logo from '../components/Logo.astro';
 
 import { FEATURES, COMPARISON_TABLE } from '../data/features';
 import { FAQS } from '../data/faq';
@@ -42,7 +43,7 @@ const jsonLd = [
     <div class="deckcam-hero-container">
       <div class="hero-text-col reveal">
         <div class="app-pill mono">
-          <img src="/icons/deckcam-icon-32.png" alt="DeckCam Icon" width="20" height="20" class="hero-pill-icon" />
+          <Logo variant="deckcam" size={20} class="hero-pill-icon" />
           <span>DECKCAM STANDALONE EDITION</span>
         </div>
 

@@ -1,5 +1,6 @@
 ---
 import { PLAY } from '../data/site';
+import Logo from './Logo.astro';
 
 interface Props {
   app: 'decktv' | 'deckcam';
@@ -19,7 +20,6 @@ const url = app === 'decktv' ? PLAY.decktv : PLAY.deckcam;
 const title = app === 'decktv' ? 'DeckTV' : 'DeckCam';
 const packageId = app === 'decktv' ? 'com.waygosquad.decktv' : 'com.waygosquad.deckcam';
 const subtitle = app === 'decktv' ? 'Android TV Launcher & CCTV' : 'Standalone CCTV Viewer';
-const iconSrc = app === 'decktv' ? '/icons/icon-180.png' : '/icons/deckcam-icon-180.png';
 ---
 
 {variant === 'badge' && (
@@ -52,7 +52,11 @@ const iconSrc = app === 'decktv' ? '/icons/icon-180.png' : '/icons/deckcam-icon-
     class={`play-pill-link size-${size} ${className}`}
     aria-label={`Download ${title} on Google Play (${packageId})`}
   >
-    <img src={iconSrc} alt={`${title} Icon`} class="app-icon" width="36" height="36" />
+    {app === 'decktv' ? (
+      <Logo variant="icon" size={32} class="app-icon" />
+    ) : (
+      <Logo variant="deckcam" size={32} class="app-icon" />
+    )}
     <div class="pill-text">
       <span class="pill-badge mono">GOOGLE PLAY</span>
       <span class="pill-title">Get {title}</span>
@@ -69,7 +73,11 @@ const iconSrc = app === 'decktv' ? '/icons/icon-180.png' : '/icons/deckcam-icon-
     aria-label={`Download ${title} on Google Play Store`}
   >
     <div class="card-icon-wrap">
-      <img src={iconSrc} alt={`${title} Icon`} class="card-app-icon" width="48" height="48" />
+      {app === 'decktv' ? (
+        <Logo variant="icon" size={48} class="card-app-icon" />
+      ) : (
+        <Logo variant="deckcam" size={48} class="card-app-icon" />
+      )}
     </div>
     <div class="card-text-wrap">
       <div class="card-header-line">
@@ -187,6 +195,7 @@ const iconSrc = app === 'decktv' ? '/icons/icon-180.png' : '/icons/deckcam-icon-
     width: 48px;
     height: 48px;
     border-radius: 12px;
+    overflow: hidden;
     display: block;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   }
