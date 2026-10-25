@@ -69,11 +69,12 @@ for (const file of BRAND_FILES) {
   const src = path.join(ASSETS_SRC, 'branding', file);
   if (fs.existsSync(src)) {
     fs.copyFileSync(src, path.join('src/assets/brand', file));
+    fs.copyFileSync(src, path.join('public/icons', file));
     if (file === 'favicon.ico') {
       fs.copyFileSync(src, path.join('public', file));
     }
-    if (file.endsWith('.png')) {
-      fs.copyFileSync(src, path.join('public/icons', file));
+    if (file === 'icon.svg') {
+      fs.copyFileSync(src, path.join('public', 'favicon.svg'));
     }
     console.log(`Copied brand asset: ${file}`);
   }
@@ -81,7 +82,8 @@ for (const file of BRAND_FILES) {
 
 // 3. Create DeckCam Vector Icon and Render Sizes
 const DECKCAM_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108" width="1024" height="1024">
-  <rect width="108" height="108" rx="24" fill="#101318"/>
+  <defs><linearGradient id="cam-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1E2836"/><stop offset="1" stop-color="#090B0F"/></linearGradient></defs>
+  <rect width="108" height="108" rx="24.3" fill="url(#cam-bg)"/>
   <path fill="#5AC8FA" d="M34 42h28a5 5 0 0 1 5 5v14a5 5 0 0 1 -5 5h-28a5 5 0 0 1 -5 -5v-14a5 5 0 0 1 5 -5z"/>
   <path fill="#5AC8FA" d="M70 48l10 -6v24l-10 -6z"/>
   <circle cx="40" cy="46" r="2.4" fill="#FF453A"/>
