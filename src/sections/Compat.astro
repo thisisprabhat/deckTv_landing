@@ -1,0 +1,131 @@
+---
+import Section from '../components/Section.astro';
+
+const BRANDS = [
+  { name: 'Hikvision', type: 'DVR / NVR / IP Cam', path: 'ISAPI & RTSP' },
+  { name: 'HiLook', type: 'OEM Hikvision', path: 'RTSP ch101/ch102' },
+  { name: 'LTS', type: 'OEM Hikvision', path: 'RTSP Streaming' },
+  { name: 'Annke', type: 'RTSP Compatible', path: 'Sub & Main Stream' },
+  { name: 'Dahua', type: 'DVR / NVR / XVR', path: 'RPC & RTSP :554' },
+  { name: 'CP Plus', type: 'Orange / Indigo DVR', path: 'cam/realmonitor' },
+  { name: 'Amcrest', type: 'IP Cameras & NVR', path: 'RTSP Direct' },
+  { name: 'Lorex', type: '4K Security NVR', path: 'Multi-channel RTSP' },
+  { name: 'Uniview (UNV)', type: 'NVR & IPC', path: 'unicore RTSP' },
+  { name: 'TVT / Provision', type: 'H.264 / H.265 DVR', path: 'ch01 / ch02' },
+  { name: 'XMEye / Xiongmai', type: 'NetSurveillance DVR', path: 'RTSP port 554' },
+  { name: 'Generic RTSP', type: 'Any IP Camera', path: 'Custom URI templates' },
+];
+---
+
+<Section
+  id="compatibility"
+  eyebrow="CROSS-BRAND INTEROPERABILITY"
+  title="Plug into the security hardware you already own"
+  lede="No need to rip and replace existing cameras or buy vendor-locked subscriptions. DeckTV connects directly to industry-standard RTSP endpoints."
+  containerWidth="wide"
+>
+  <div class="brands-grid reveal">
+    {BRANDS.map((brand) => (
+      <div class="brand-item card">
+        <div class="brand-top">
+          <span class="brand-title mono">{brand.name}</span>
+          <span class="brand-protocol mono">{brand.path}</span>
+        </div>
+        <span class="brand-subtitle">{brand.type}</span>
+      </div>
+    ))}
+  </div>
+
+  <div class="protocol-bar card reveal">
+    <div class="protocol-item mono">
+      <span class="proto-key">RTSP TRANSPORT:</span>
+      <span class="proto-val">TCP / UDP Interleaved</span>
+    </div>
+    <div class="protocol-item mono">
+      <span class="proto-key">CODECS:</span>
+      <span class="proto-val">H.264 / AVC · H.265 / HEVC</span>
+    </div>
+    <div class="protocol-item mono">
+      <span class="proto-key">AUTO-DISCOVERY:</span>
+      <span class="proto-val">Active Channel Probe</span>
+    </div>
+    <div class="protocol-item mono">
+      <span class="proto-key">SECURITY:</span>
+      <span class="proto-val">Digest & Basic Auth · HTTPS</span>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .brands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .brand-item {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .brand-item:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .brand-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .brand-title {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: #FFFFFF;
+  }
+
+  .brand-protocol {
+    font-size: 0.6875rem;
+    color: var(--accent);
+  }
+
+  .brand-subtitle {
+    font-size: 0.8125rem;
+    color: var(--text-dim);
+  }
+
+  .protocol-bar {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 1.25rem 2rem;
+    background: var(--deep);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+  }
+
+  .protocol-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .proto-key {
+    color: var(--text-dim);
+  }
+
+  .proto-val {
+    color: var(--text);
+    font-weight: 600;
+  }
+</style>

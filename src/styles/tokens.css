@@ -1,0 +1,52 @@
+:root {
+  /* Colors */
+  --bg: #0B0D10;
+  --deep: #101318;
+  --surface: #171A1F;
+  --surface-hi: #242830;
+  --text: #F2F4F7;
+  --text-dim: #9AA3AF;
+  --accent: #5AC8FA;
+  --accent-dim: rgb(90 200 250 / 0.15);
+  --accent-glow: rgb(90 200 250 / 0.35);
+  --live: #FF453A;
+  --green: #32D74B;
+  --orange: #FF9F0A;
+
+  /* Hairline Rules */
+  --rule: rgb(242 244 247 / 0.08);
+  --rule-strong: rgb(242 244 247 / 0.16);
+  --rule-glow: rgb(90 200 250 / 0.28);
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+
+  /* Hairline Library Token Overrides */
+  --hairline-plate: var(--bg);
+  --hairline-hi: var(--accent);
+  --hairline-edge: rgb(242 244 247 / 0.7);
+  --hairline-mid: rgb(242 244 247 / 0.35);
+  --hairline-lo: rgb(242 244 247 / 0.15);
+  --hairline-stroke: 0.9;
+
+  /* Typography */
+  --font-sans: 'Outfit Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Fluid Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+  --space-3xl: 8rem;
+
+  /* Layout */
+  --max-w-prose: 68ch;
+  --max-w-content: 1240px;
+  --max-w-wide: 1400px;
+}

@@ -1,0 +1,97 @@
+---
+interface Props {
+  id: string;
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+  class?: string;
+  containerWidth?: 'normal' | 'wide' | 'narrow';
+}
+
+const {
+  id,
+  eyebrow,
+  title,
+  lede,
+  class: className = '',
+  containerWidth = 'normal',
+} = Astro.props;
+---
+
+<section id={id} class={`page-section ${className}`} aria-labelledby={`${id}-heading`}>
+  <div class={`section-container width-${containerWidth}`}>
+    {(eyebrow || title || lede) && (
+      <header class="section-header reveal">
+        {eyebrow && <span class="eyebrow mono">{eyebrow}</span>}
+        <h2 id={`${id}-heading`} class="section-title">{title}</h2>
+        {lede && <p class="section-lede">{lede}</p>}
+      </header>
+    )}
+    <div class="section-content">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .page-section {
+    padding: 5rem 1.5rem;
+    position: relative;
+  }
+
+  .section-container {
+    margin: 0 auto;
+  }
+
+  .width-normal {
+    max-width: var(--max-w-content);
+  }
+
+  .width-wide {
+    max-width: var(--max-w-wide);
+  }
+
+  .width-narrow {
+    max-width: 900px;
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.875rem;
+  }
+
+  .eyebrow {
+    font-size: 0.8125rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    padding: 0.25rem 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-full);
+  }
+
+  .section-title {
+    color: var(--text);
+  }
+
+  .section-lede {
+    font-size: 1.15rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    max-width: 64ch;
+  }
+
+  @media (max-width: 640px) {
+    .page-section {
+      padding: 3.5rem 1rem;
+    }
+    .section-header {
+      margin-bottom: 2.25rem;
+    }
+  }
+</style>

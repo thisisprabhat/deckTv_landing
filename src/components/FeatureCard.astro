@@ -1,0 +1,141 @@
+---
+import type { FeatureItem } from '../data/features';
+
+interface Props {
+  feature: FeatureItem;
+  class?: string;
+}
+
+const { feature, class: className = '' } = Astro.props;
+
+const tagLabel = feature.tag === 'TV' ? 'DeckTV Only' : feature.tag === 'CAM' ? 'DeckCam Only' : 'DeckTV & DeckCam';
+const tagClass = feature.tag.toLowerCase();
+---
+
+<div class={`card feature-card card-glow ${className}`}>
+  {feature.screen && (
+    <div class="card-screen-wrap">
+      <img
+        src={`/screens/${feature.screen}`}
+        alt={feature.title}
+        width="640"
+        height="360"
+        class="card-screen-img"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="screen-tint"></div>
+    </div>
+  )}
+
+  <div class="card-body">
+    <div class="card-meta">
+      <span class={`tag-pill mono tag-${tagClass}`}>{tagLabel}</span>
+      <span class="group-label mono">{feature.groupTitle}</span>
+    </div>
+
+    <h3 class="card-title">
+      <a href={`/features#${feature.groupId}`} class="card-title-link">
+        {feature.title}
+      </a>
+    </h3>
+
+    <p class="card-detail">{feature.detail}</p>
+  </div>
+</div>
+
+<style>
+  .feature-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .card-screen-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    overflow: hidden;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .card-screen-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .feature-card:hover .card-screen-img {
+    transform: scale(1.03);
+  }
+
+  .screen-tint {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(23, 26, 31, 0.6) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    flex-grow: 1;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .tag-pill {
+    font-size: 0.6875rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--rule);
+  }
+
+  .tag-tv {
+    background: rgba(90, 200, 250, 0.1);
+    color: var(--accent);
+    border-color: rgba(90, 200, 250, 0.25);
+  }
+
+  .tag-cam {
+    background: rgba(50, 215, 75, 0.1);
+    color: var(--green);
+    border-color: rgba(50, 215, 75, 0.25);
+  }
+
+  .tag-both {
+    background: rgba(242, 244, 247, 0.08);
+    color: var(--text);
+  }
+
+  .group-label {
+    font-size: 0.6875rem;
+    color: var(--text-dim);
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+
+  .card-title-link:hover {
+    color: var(--accent);
+  }
+
+  .card-detail {
+    font-size: 0.9375rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+    margin: 0;
+  }
+</style>

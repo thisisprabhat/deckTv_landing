@@ -1,0 +1,125 @@
+---
+interface Props {
+  figure: 'router' | 'padlock' | 'phone' | 'remote' | 'terminal' | 'keyboard';
+  label?: string;
+  intensity?: number;
+  play?: boolean;
+  class?: string;
+  id?: string;
+}
+
+const {
+  figure,
+  label = `${figure} figure`,
+  intensity = 0.5,
+  play = true,
+  class: className = '',
+  id,
+} = Astro.props;
+
+const figureId = id || `hairline-${figure}-${Math.random().toString(36).substring(2, 9)}`;
+---
+
+<div
+  id={figureId}
+  class={`hairline-figure-container ${className}`}
+  data-figure={figure}
+  data-intensity={intensity}
+  data-play={play ? 'true' : 'false'}
+  aria-label={label}
+  role="img"
+>
+  <div class="figure-mount" id={`${figureId}-mount`}></div>
+</div>
+
+<script>
+  import { router, padlock, phone, terminal, keyboard } from '@lucasmarkes/hairline';
+  import { remote } from '../figures/remote.js';
+
+  const figureMap: Record<string, any> = {
+    router,
+    padlock,
+    phone,
+    terminal,
+    keyboard,
+    remote,
+  };
+
+  function initFigures() {
+    const containers = document.querySelectorAll<HTMLElement>('.hairline-figure-container:not([data-initialized])');
+
+    containers.forEach((container) => {
+      const figureName = container.dataset.figure;
+      const intensity = parseFloat(container.dataset.intensity || '0.5');
+      const play = container.dataset.play === 'true';
+      const mountEl = container.querySelector<HTMLElement>('.figure-mount');
+
+      if (!mountEl || !figureName || !figureMap[figureName]) return;
+
+      const fn = figureMap[figureName];
+      let instance: any = null;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !instance) {
+              try {
+                instance = fn(mountEl, {
+                  intensity,
+                  play: !window.matchMedia('(prefers-reduced-motion: reduce)').matches && play,
+                  theme: 'dark',
+                });
+                container.setAttribute('data-initialized', 'true');
+              } catch (err) {
+                console.warn(`Could not mount hairline figure: ${figureName}`, err);
+              }
+            }
+          });
+        },
+        { rootMargin: '100px' }
+      );
+
+      observer.observe(container);
+
+      // Clean up on view transitions
+      document.addEventListener('astro:before-swap', () => {
+        if (instance && typeof instance.destroy === 'function') {
+          instance.destroy();
+          instance = null;
+        }
+        observer.disconnect();
+      }, { once: true });
+    });
+  }
+
+  // Run on initial load and view transitions
+  initFigures();
+  document.addEventListener('astro:page-load', initFigures);
+</script>
+
+<style>
+  .hairline-figure-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    --hairline-plate: #0B0D10;
+    --hairline-hi: #5AC8FA;
+    --hairline-edge: rgba(242, 244, 247, 0.7);
+    --hairline-mid: rgba(242, 244, 247, 0.35);
+    --hairline-lo: rgba(242, 244, 247, 0.15);
+    --hairline-stroke: 0.9;
+  }
+
+  .figure-mount {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  :global(.hairline-figure-container svg) {
+    max-width: 100%;
+    height: auto;
+  }
+</style>

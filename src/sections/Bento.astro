@@ -1,0 +1,321 @@
+---
+import Section from '../components/Section.astro';
+import HairlineFigure from '../components/HairlineFigure.astro';
+---
+
+<Section
+  id="features"
+  eyebrow="FEATURE ARCHITECTURE"
+  title="Everything you need in a control room"
+  lede="Purpose-built for smart surveillance, from dual-stream decoding to remote control ergonomics."
+  containerWidth="wide"
+>
+  <div class="bento-grid">
+    <!-- Tile 1: Multi-Camera Layouts (Large 2-column tile) -->
+    <div class="bento-card bento-span-2 card card-glow reveal">
+      <div class="bento-header">
+        <span class="bento-tag mono">GRID SYSTEM</span>
+        <h3 class="bento-title">Every camera, one screen</h3>
+        <p class="bento-desc">
+          Switch dynamically between <strong>My Selection (4 curated feeds)</strong>, <strong>9-up wall</strong>, <strong>All cameras</strong>, and <strong>Single full-screen focus</strong> with smooth spring transitions.
+        </p>
+      </div>
+
+      <!-- Layout Tabs & Preview -->
+      <div class="layout-showcase" id="layout-showcase">
+        <div class="layout-tabs mono">
+          <button type="button" class="tab-btn is-active" data-target="quad">4-UP (MINE)</button>
+          <button type="button" class="tab-btn" data-target="nine">9-UP GRID</button>
+          <button type="button" class="tab-btn" data-target="all">ALL CAMERAS</button>
+        </div>
+
+        <div class="layout-display">
+          <img
+            id="layout-img"
+            src="/screens/14-camera-grid-4.png"
+            alt="DeckTV multi-camera grid layout"
+            width="800"
+            height="450"
+            class="layout-preview-img"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Tile 2: Multi-Brand DVR Engine + Hairline Router Figure -->
+    <div class="bento-card card card-glow reveal">
+      <div class="bento-header">
+        <span class="bento-tag mono">DVR & NVR ENGINE</span>
+        <h3 class="bento-title">Works with your existing DVR</h3>
+        <p class="bento-desc">
+          Native RTSP protocols for Hikvision, Dahua, Uniview, CP Plus, and generic IP cameras over your private LAN.
+        </p>
+      </div>
+
+      <div class="hairline-box">
+        <HairlineFigure figure="router" label="DVR Network Router" intensity={0.6} />
+      </div>
+    </div>
+
+    <!-- Tile 3: Lossless Snapshots & Evidence Gallery -->
+    <div class="bento-card card card-glow reveal">
+      <div class="bento-header">
+        <span class="bento-tag mono">EVIDENCE CAPTURE</span>
+        <h3 class="bento-title">Instant Snapshots & Gallery</h3>
+        <p class="bento-desc">
+          Press the Red key to instantly snapshot any feed in full-resolution PNG to <code class="code-pill">Pictures/CamDeck</code>.
+        </p>
+      </div>
+
+      <div class="bento-media-wrap">
+        <img
+          src="/screens/17-snapshots-gallery.png"
+          alt="Built-in snapshot gallery viewer"
+          width="500"
+          height="281"
+          class="bento-img"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+
+    <!-- Tile 4: Independent Audio Monitoring -->
+    <div class="bento-card card card-glow reveal">
+      <div class="bento-header">
+        <span class="bento-tag mono">AUDIO MONITORING</span>
+        <h3 class="bento-title">Listen to Any Camera</h3>
+        <p class="bento-desc">
+          Monitor the microphone audio on any camera feed with independent volume control, separate from the TV's main volume.
+        </p>
+      </div>
+
+      <div class="bento-media-wrap">
+        <img
+          src="/screens/18-camera-audio-picker.png"
+          alt="DeckTV audio channel picker"
+          width="500"
+          height="281"
+          class="bento-img"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+
+    <!-- Tile 5: Minimal Apple TV-Style Home Launcher -->
+    <div class="bento-card bento-span-2 card card-glow reveal">
+      <div class="bento-header">
+        <span class="bento-tag mono">ANDROID TV LAUNCHER</span>
+        <h3 class="bento-title">A clean home screen, not an ad billboard</h3>
+        <p class="bento-desc">
+          Apple TV-style glass focus highlights, recent apps row, customizable dock, and clock screensaver. Zero sponsored advertisements.
+        </p>
+      </div>
+
+      <div class="bento-media-wrap launcher-media">
+        <img
+          src="/screens/01-home.png"
+          alt="DeckTV clean home launcher interface"
+          width="800"
+          height="450"
+          class="bento-img"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+
+    <!-- Tile 6: Local & Keystore Encrypted + Hairline Padlock Figure -->
+    <div class="bento-card card card-glow reveal">
+      <div class="bento-header">
+        <span class="bento-tag mono">PRIVACY FIRST</span>
+        <h3 class="bento-title">100% Local & Private</h3>
+        <p class="bento-desc">
+          Feeds never touch cloud servers. Passwords are encrypted on-device using Android Keystore AES hardware security.
+        </p>
+      </div>
+
+      <div class="hairline-box">
+        <HairlineFigure figure="padlock" label="Hardware Keystore Security" intensity={0.6} />
+      </div>
+    </div>
+  </div>
+</Section>
+
+<script>
+  function initLayoutTabs() {
+    const tabs = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+    const img = document.getElementById('layout-img') as HTMLImageElement;
+    if (!tabs.length || !img) return;
+
+    const sources: Record<string, string> = {
+      quad: '/screens/14-camera-grid-4.png',
+      nine: '/screens/12-camera-grid-9.png',
+      all: '/screens/15-camera-layout-all.png',
+    };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.classList.remove('is-active'));
+        tab.classList.add('is-active');
+        const target = tab.dataset.target;
+        if (target && sources[target]) {
+          img.src = sources[target];
+        }
+      });
+    });
+  }
+
+  initLayoutTabs();
+  document.addEventListener('astro:page-load', initLayoutTabs);
+</script>
+
+<style>
+  .bento-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .bento-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .bento-span-2 {
+      grid-column: span 2;
+    }
+  }
+
+  .bento-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2rem;
+    gap: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+  }
+
+  .bento-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .bento-tag {
+    font-size: 0.6875rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .bento-title {
+    font-size: 1.45rem;
+    color: #FFFFFF;
+    letter-spacing: -0.015em;
+  }
+
+  .bento-desc {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  .code-pill {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--accent);
+    background: var(--surface-hi);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  /* Layout tabs showcase */
+  .layout-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .layout-tabs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    padding: 0.375rem 0.875rem;
+    background: var(--deep);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-full);
+    color: var(--text-dim);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .tab-btn:hover {
+    color: var(--text);
+    border-color: var(--rule-strong);
+  }
+
+  .tab-btn.is-active {
+    background: var(--accent-dim);
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .layout-display {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #000;
+    border: 1px solid var(--rule);
+  }
+
+  .layout-preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hairline-box {
+    width: 100%;
+    aspect-ratio: 5 / 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--deep);
+    border-radius: 12px;
+    border: 1px solid var(--rule);
+    overflow: hidden;
+  }
+
+  .bento-media-wrap {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #000;
+    border: 1px solid var(--rule);
+  }
+
+  .bento-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .bento-card:hover .bento-img {
+    transform: scale(1.02);
+  }
+</style>

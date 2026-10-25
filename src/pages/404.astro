@@ -1,0 +1,192 @@
+---
+import Base from '../layouts/Base.astro';
+import TvFrame from '../components/TvFrame.astro';
+---
+
+<Base
+  title="404 — No Signal | DeckTV"
+  description="Feed lost. The requested surveillance channel could not be found."
+  path="/404"
+  noindex={true}
+>
+  <div class="notfound-container">
+    <div class="notfound-tv-wrap reveal">
+      <TvFrame variant="wall" glow={true} class="notfound-tv">
+        <div class="no-signal-screen mono">
+          <div class="test-pattern" aria-hidden="true">
+            <div class="bar bar-white"></div>
+            <div class="bar bar-yellow"></div>
+            <div class="bar bar-cyan"></div>
+            <div class="bar bar-green"></div>
+            <div class="bar bar-magenta"></div>
+            <div class="bar bar-red"></div>
+            <div class="bar bar-blue"></div>
+          </div>
+
+          <div class="screen-hud">
+            <div class="hud-top">
+              <span class="lost-pill">⚠️ CHANNEL LOSS</span>
+              <span>ERR-404</span>
+            </div>
+            <div class="hud-center">
+              <span class="center-title">NO VIDEO SIGNAL</span>
+              <span class="center-sub">STREAM DISCONNECTED OR MOVED</span>
+            </div>
+            <div class="hud-bottom">
+              <span>AUTO RECONNECT TIMEOUT</span>
+              <span>0.00 KB/S</span>
+            </div>
+          </div>
+        </div>
+      </TvFrame>
+    </div>
+
+    <div class="notfound-content reveal">
+      <h1 class="notfound-title">Feed not found</h1>
+      <p class="notfound-desc">
+        The page or camera feed you are trying to view doesn't exist or has been relocated.
+      </p>
+      <div class="notfound-actions">
+        <a href="/" class="home-btn mono">
+          <span>← RETURN TO CONTROL ROOM HOME</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .notfound-container {
+    max-width: 860px;
+    margin: 4rem auto 6rem;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 3rem;
+  }
+
+  .notfound-tv-wrap {
+    width: 100%;
+    max-width: 680px;
+  }
+
+  .no-signal-screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.25rem;
+    color: #F2F4F7;
+    overflow: hidden;
+  }
+
+  .test-pattern {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    opacity: 0.15;
+    pointer-events: none;
+  }
+
+  .bar {
+    flex: 1;
+    height: 100%;
+  }
+
+  .bar-white { background: #FFFFFF; }
+  .bar-yellow { background: #FFFF00; }
+  .bar-cyan { background: #00FFFF; }
+  .bar-green { background: #00FF00; }
+  .bar-magenta { background: #FF00FF; }
+  .bar-red { background: #FF0000; }
+  .bar-blue { background: #0000FF; }
+
+  .screen-hud {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .hud-top, .hud-bottom {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #9AA3AF;
+  }
+
+  .lost-pill {
+    color: var(--live);
+    font-weight: 700;
+  }
+
+  .hud-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .center-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #FFFFFF;
+    text-shadow: 0 0 12px rgba(255, 69, 58, 0.6);
+  }
+
+  .center-sub {
+    font-size: 0.8125rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  .notfound-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    max-width: 500px;
+  }
+
+  .notfound-title {
+    font-size: 2.25rem;
+    color: var(--text);
+  }
+
+  .notfound-desc {
+    font-size: 1.0625rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-full);
+    color: var(--accent);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-top: 0.75rem;
+    transition: all 0.2s ease;
+  }
+
+  .home-btn:hover {
+    border-color: var(--accent);
+    background: var(--surface-hi);
+    transform: translateY(-2px);
+  }
+</style>

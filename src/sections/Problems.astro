@@ -1,0 +1,136 @@
+---
+import { PROBLEMS_SOLUTIONS } from '../data/features';
+import Section from '../components/Section.astro';
+---
+
+<Section
+  id="problems"
+  eyebrow="ENGINEERED FOR REALITY"
+  title="Tired of clunky CCTV apps and cable tangles?"
+  lede="Commercial NVR setups shouldn't require running 50-meter HDMI cables through ceiling ducts or fumbling with laggy mobile apps on a TV."
+  containerWidth="wide"
+>
+  <div class="problems-grid">
+    {PROBLEMS_SOLUTIONS.map((item) => (
+      <div class="problem-card card card-glow reveal">
+        <div class="problem-card-header">
+          <span class="problem-num mono">{String(item.number).padStart(2, '0')}</span>
+          <span class={`tag-pill mono tag-${item.tag.toLowerCase()}`}>
+            {item.tag === 'TV' ? 'DeckTV' : item.tag === 'CAM' ? 'DeckCam' : 'Both Apps'}
+          </span>
+        </div>
+
+        <div class="problem-statement">
+          <span class="problem-prefix mono">THE PAIN</span>
+          <p class="problem-text">{item.problem}</p>
+        </div>
+
+        <div class="solution-statement">
+          <span class="solution-prefix mono">THE FIX</span>
+          <h3 class="solution-title">{item.solution}</h3>
+          <p class="solution-detail">{item.detail}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</Section>
+
+<style>
+  .problems-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .problem-card {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+  }
+
+  .problem-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .problem-num {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .tag-pill {
+    font-size: 0.6875rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--rule);
+  }
+
+  .tag-tv {
+    background: rgba(90, 200, 250, 0.1);
+    color: var(--accent);
+    border-color: rgba(90, 200, 250, 0.25);
+  }
+
+  .tag-cam {
+    background: rgba(50, 215, 75, 0.1);
+    color: var(--green);
+    border-color: rgba(50, 215, 75, 0.25);
+  }
+
+  .tag-both {
+    background: rgba(242, 244, 247, 0.08);
+    color: var(--text-dim);
+  }
+
+  .problem-statement {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .problem-prefix {
+    font-size: 0.6875rem;
+    color: var(--live);
+    letter-spacing: 0.08em;
+  }
+
+  .problem-text {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .solution-statement {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .solution-prefix {
+    font-size: 0.6875rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+
+  .solution-title {
+    font-size: 1.15rem;
+    color: #FFFFFF;
+    margin: 0;
+  }
+
+  .solution-detail {
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--text-dim);
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,153 @@
+---
+import PlayBadge from '../components/PlayBadge.astro';
+---
+
+<section class="cta-section" id="download" aria-labelledby="cta-title">
+  <div class="cta-container">
+    <div class="cta-box card card-glow reveal">
+      <div class="cta-glow-bg" aria-hidden="true"></div>
+
+      <div class="cta-badge mono">
+        <span class="rec-dot"></span>
+        <span>GET STARTED TODAY</span>
+      </div>
+
+      <h2 id="cta-title" class="cta-title">
+        Ready to turn your TV into a control room?
+      </h2>
+
+      <p class="cta-desc">
+        Download DeckTV for full Android TV launcher integration with boot-to-camera, or get DeckCam for standalone camera monitoring on TV, phone, or tablet.
+      </p>
+
+      <div class="cta-badges-grid">
+        <div class="badge-card-column">
+          <PlayBadge app="decktv" variant="card" />
+        </div>
+        <div class="badge-card-column">
+          <PlayBadge app="deckcam" variant="card" />
+        </div>
+      </div>
+
+      <div class="cta-footer-note mono">
+        <span>NO REGISTRATION</span>
+        <span class="dot">·</span>
+        <span>NO THIRD-PARTY CLOUD</span>
+        <span class="dot">·</span>
+        <span>KEYSTORE ENCRYPTED</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section {
+    padding: 6rem 1.5rem 2rem;
+    position: relative;
+  }
+
+  .cta-container {
+    max-width: var(--max-w-content);
+    margin: 0 auto;
+  }
+
+  .cta-box {
+    position: relative;
+    padding: 4.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .cta-glow-bg {
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(90, 200, 250, 0.22), transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .cta-badge {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.875rem;
+    background: var(--deep);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    color: var(--accent);
+  }
+
+  .cta-title {
+    position: relative;
+    z-index: 1;
+    font-size: clamp(2.2rem, 4vw + 0.5rem, 3.5rem);
+    letter-spacing: -0.025em;
+    color: #FFFFFF;
+    max-width: 22ch;
+  }
+
+  .cta-desc {
+    position: relative;
+    z-index: 1;
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+    max-width: 60ch;
+    margin: 0;
+  }
+
+  .cta-badges-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 780px;
+    margin-top: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .cta-badges-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .cta-footer-note {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .dot {
+    color: var(--rule-strong);
+  }
+
+  @media (max-width: 640px) {
+    .cta-box {
+      padding: 3rem 1.25rem;
+    }
+  }
+</style>

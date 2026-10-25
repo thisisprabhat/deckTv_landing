@@ -1,0 +1,165 @@
+---
+import Base from './Base.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  effectiveDate: string;
+  appTitle: string;
+  packageId: string;
+  jsonLd?: Record<string, any>[];
+}
+
+const {
+  title,
+  description,
+  path,
+  effectiveDate,
+  appTitle,
+  packageId,
+  jsonLd,
+} = Astro.props;
+---
+
+<Base
+  title={title}
+  description={description}
+  path={path}
+  ogImage="/og/og-privacy.png"
+  jsonLd={jsonLd}
+>
+  <article class="prose-container">
+    <header class="prose-header">
+      <div class="prose-meta mono">
+        <span class="meta-pill">EFFECTIVE: {effectiveDate}</span>
+        <span class="meta-pill">APP: {appTitle} ({packageId})</span>
+      </div>
+      <h1 class="prose-title">{title}</h1>
+      <p class="prose-desc">{description}</p>
+    </header>
+
+    <div class="prose-content">
+      <slot />
+    </div>
+  </article>
+</Base>
+
+<style>
+  .prose-container {
+    max-width: var(--max-w-prose);
+    margin: 4rem auto 6rem;
+    padding: 0 1.5rem;
+  }
+
+  .prose-header {
+    margin-bottom: 3.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .prose-meta {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    font-size: 0.75rem;
+  }
+
+  .meta-pill {
+    padding: 0.25rem 0.625rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-sm);
+    color: var(--accent);
+  }
+
+  .prose-title {
+    font-size: clamp(2.2rem, 3.5vw + 0.5rem, 3.25rem);
+    letter-spacing: -0.025em;
+    color: var(--text);
+  }
+
+  .prose-desc {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  /* Rich prose typography */
+  .prose-content {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--text-dim);
+  }
+
+  :global(.prose-content h2) {
+    font-size: 1.75rem;
+    color: var(--text);
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  :global(.prose-content h3) {
+    font-size: 1.35rem;
+    color: var(--text);
+    margin-top: 2.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  :global(.prose-content p) {
+    margin-bottom: 1.5rem;
+  }
+
+  :global(.prose-content ul, .prose-content ol) {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  :global(.prose-content li) {
+    margin-bottom: 0.5rem;
+  }
+
+  :global(.prose-content strong) {
+    color: var(--text);
+  }
+
+  :global(.prose-content table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9375rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+
+  :global(.prose-content th, .prose-content td) {
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid var(--rule);
+    text-align: left;
+  }
+
+  :global(.prose-content th) {
+    background: var(--deep);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+  }
+
+  :global(.prose-content code) {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--accent);
+    background: var(--surface-hi);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+</style>

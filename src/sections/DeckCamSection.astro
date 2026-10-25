@@ -1,0 +1,180 @@
+---
+import PlayBadge from '../components/PlayBadge.astro';
+import HairlineFigure from '../components/HairlineFigure.astro';
+---
+
+<section class="deckcam-spotlight rule-top" id="deckcam-spotlight" aria-labelledby="deckcam-spot-title">
+  <div class="deckcam-container">
+    <div class="spotlight-card card card-glow reveal">
+      <div class="spotlight-content">
+        <div class="spotlight-badge mono">
+          <span class="cam-icon">📹</span>
+          <span>STANDALONE MONITOR APP</span>
+        </div>
+
+        <h2 id="deckcam-spot-title" class="spotlight-title">
+          Just want the cameras? <br />
+          <span class="accent-text">Meet DeckCam.</span>
+        </h2>
+
+        <p class="spotlight-desc">
+          If you prefer to keep your TV's factory launcher, or want CCTV monitoring on your Android phone or tablet, DeckCam provides the identical high-performance camera wall engine with <strong>zero launcher code</strong> and <strong>zero extra permissions</strong>.
+        </p>
+
+        <ul class="spotlight-features mono">
+          <li>✓ TV Remote D-Pad + Touchscreen Swipe & Tap</li>
+          <li>✓ Runs on Phones, Tablets, and Android TV Boxes</li>
+          <li>✓ No Launcher Permissions Needed</li>
+          <li>✓ Direct Launch Straight into Camera Streams</li>
+        </ul>
+
+        <div class="spotlight-actions">
+          <PlayBadge app="deckcam" size="lg" variant="badge" />
+          <a href="/deckcam" class="learn-deckcam-btn">
+            <span>Explore DeckCam & Comparison</span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Hairline Phone Isometric Figure -->
+      <div class="spotlight-graphic">
+        <div class="phone-figure-wrap">
+          <HairlineFigure figure="phone" label="DeckCam Mobile Surveillance" intensity={0.7} />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .deckcam-spotlight {
+    padding: 6rem 1.5rem;
+    background: linear-gradient(180deg, var(--bg) 0%, #10141A 100%);
+  }
+
+  .deckcam-container {
+    max-width: var(--max-w-content);
+    margin: 0 auto;
+  }
+
+  .spotlight-card {
+    padding: 3rem 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--rule-strong);
+  }
+
+  @media (min-width: 960px) {
+    .spotlight-card {
+      grid-template-columns: 1.2fr 0.8fr;
+      padding: 4rem;
+    }
+  }
+
+  .spotlight-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .spotlight-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--green);
+    letter-spacing: 0.1em;
+  }
+
+  .spotlight-title {
+    font-size: clamp(2rem, 3.5vw + 0.5rem, 3.25rem);
+    line-height: 1.15;
+    color: var(--text);
+    letter-spacing: -0.025em;
+  }
+
+  .accent-text {
+    color: var(--accent);
+  }
+
+  .spotlight-desc {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  .spotlight-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    font-size: 0.8125rem;
+    color: var(--text);
+    margin: 0.5rem 0;
+  }
+
+  .spotlight-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+  }
+
+  .learn-deckcam-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--text);
+    padding: 0.625rem 1.125rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--rule);
+    transition: all 0.2s ease;
+  }
+
+  .learn-deckcam-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateX(2px);
+  }
+
+  .arrow {
+    transition: transform 0.2s ease;
+  }
+
+  .learn-deckcam-btn:hover .arrow {
+    transform: translateX(4px);
+  }
+
+  .spotlight-graphic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .phone-figure-wrap {
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 5 / 4;
+    background: var(--deep);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 640px) {
+    .spotlight-card {
+      padding: 2rem 1.5rem;
+    }
+  }
+</style>

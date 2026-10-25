@@ -1,0 +1,236 @@
+---
+import { PLAY } from '../data/site';
+
+interface Props {
+  app: 'decktv' | 'deckcam';
+  size?: 'sm' | 'md' | 'lg';
+  variant?: 'badge' | 'pill' | 'card';
+  class?: string;
+}
+
+const {
+  app,
+  size = 'md',
+  variant = 'badge',
+  class: className = '',
+} = Astro.props;
+
+const url = app === 'decktv' ? PLAY.decktv : PLAY.deckcam;
+const title = app === 'decktv' ? 'DeckTV' : 'DeckCam';
+const packageId = app === 'decktv' ? 'com.waygosquad.decktv' : 'com.waygosquad.deckcam';
+const subtitle = app === 'decktv' ? 'Android TV Launcher & CCTV' : 'Standalone CCTV Viewer';
+const iconSrc = app === 'decktv' ? '/icons/icon-180.png' : '/icons/deckcam-icon-180.png';
+---
+
+{variant === 'badge' && (
+  <a
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    class={`play-badge-link size-${size} ${className}`}
+    aria-label={`Get ${title} on Google Play`}
+  >
+    <div class="badge-inner">
+      <img
+        src="/badges/google-play-badge.svg"
+        alt="Get it on Google Play"
+        width="180"
+        height="53"
+        class="badge-svg-img"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  </a>
+)}
+
+{variant === 'pill' && (
+  <a
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    class={`play-pill-link size-${size} ${className}`}
+    aria-label={`Download ${title} on Google Play (${packageId})`}
+  >
+    <img src={iconSrc} alt={`${title} Icon`} class="app-icon" width="36" height="36" />
+    <div class="pill-text">
+      <span class="pill-badge mono">GOOGLE PLAY</span>
+      <span class="pill-title">Get {title}</span>
+    </div>
+  </a>
+)}
+
+{variant === 'card' && (
+  <a
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    class={`play-card-link size-${size} ${className}`}
+    aria-label={`Download ${title} on Google Play Store`}
+  >
+    <div class="card-icon-wrap">
+      <img src={iconSrc} alt={`${title} Icon`} class="card-app-icon" width="48" height="48" />
+    </div>
+    <div class="card-text-wrap">
+      <div class="card-header-line">
+        <span class="app-title">{title}</span>
+        <span class="app-pkg mono">{packageId}</span>
+      </div>
+      <p class="app-sub">{subtitle}</p>
+      <div class="card-cta-badge">
+        <span class="rec-dot"></span>
+        <span class="cta-label mono">FREE ON GOOGLE PLAY</span>
+      </div>
+    </div>
+  </a>
+)}
+
+<style>
+  /* Badge Variant */
+  .play-badge-link {
+    display: inline-flex;
+    align-items: center;
+    border-radius: var(--radius-sm);
+    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.2s ease;
+  }
+
+  .play-badge-link:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+  }
+
+  .badge-svg-img {
+    height: 48px;
+    width: auto;
+    display: block;
+  }
+
+  .size-lg .badge-svg-img {
+    height: 56px;
+  }
+
+  .size-sm .badge-svg-img {
+    height: 40px;
+  }
+
+  /* Pill Variant */
+  .play-pill-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 1.125rem;
+    background: var(--surface);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-full);
+    color: var(--text);
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .play-pill-link:hover {
+    border-color: var(--accent);
+    background: var(--surface-hi);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px -4px rgba(90, 200, 250, 0.25);
+  }
+
+  .app-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: block;
+  }
+
+  .pill-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .pill-badge {
+    font-size: 0.625rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+
+  .pill-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  /* Card Variant */
+  .play-card-link {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .play-card-link:hover {
+    border-color: var(--accent);
+    background: var(--surface-hi);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.5);
+  }
+
+  .card-icon-wrap {
+    flex-shrink: 0;
+  }
+
+  .card-app-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: block;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  .card-text-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex-grow: 1;
+  }
+
+  .card-header-line {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .app-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  .app-pkg {
+    font-size: 0.6875rem;
+    color: var(--text-dim);
+  }
+
+  .app-sub {
+    font-size: 0.875rem;
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  .card-cta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.35rem;
+  }
+
+  .cta-label {
+    font-size: 0.6875rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+</style>

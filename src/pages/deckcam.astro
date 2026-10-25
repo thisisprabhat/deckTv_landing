@@ -1,0 +1,470 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import TvFrame from '../components/TvFrame.astro';
+import PlayBadge from '../components/PlayBadge.astro';
+import Faq from '../components/Faq.astro';
+import HairlineFigure from '../components/HairlineFigure.astro';
+
+import { FEATURES, COMPARISON_TABLE } from '../data/features';
+import { FAQS } from '../data/faq';
+import { SITE_URL } from '../data/site';
+import {
+  getOrganizationSchema,
+  getDeckCamAppSchema,
+  getBreadcrumbSchema,
+  getFaqSchema,
+} from '../lib/jsonld';
+
+const deckCamFeatures = FEATURES.filter((f) => f.tag === 'CAM' || f.tag === 'BOTH');
+const deckCamFaqs = FAQS.filter((f) => f.category === 'deckcam' || f.category === 'general');
+
+const jsonLd = [
+  getOrganizationSchema(),
+  getDeckCamAppSchema(),
+  getBreadcrumbSchema([
+    { name: 'Home', url: SITE_URL },
+    { name: 'DeckCam', url: `${SITE_URL}/deckcam` },
+  ]),
+  getFaqSchema(deckCamFaqs),
+];
+---
+
+<Base
+  title="DeckCam — CCTV & DVR Viewer for Android TV, Phone & Tablet"
+  description="Watch your DVR/NVR cameras on any Android device. Grids, full view, snapshots and audio — local network only, zero cloud, no account required."
+  path="/deckcam"
+  ogImage="/og/og-deckcam.png"
+  jsonLd={jsonLd}
+>
+  <!-- Hero Section -->
+  <section class="deckcam-hero" aria-labelledby="deckcam-hero-title">
+    <div class="deckcam-hero-container">
+      <div class="hero-text-col reveal">
+        <div class="app-pill mono">
+          <img src="/icons/deckcam-icon-32.png" alt="DeckCam Icon" width="20" height="20" class="hero-pill-icon" />
+          <span>DECKCAM STANDALONE EDITION</span>
+        </div>
+
+        <h1 id="deckcam-hero-title" class="display-title hero-heading">
+          Watch your cameras on <span class="highlight">any Android device</span>.
+        </h1>
+
+        <p class="hero-lede">
+          The identical high-performance CCTV monitor engine as DeckTV, packaged as a lightweight standalone app. No launcher permissions, no home screen replacements — direct to live camera feeds on your TV, phone, tablet, or TV box.
+        </p>
+
+        <div class="hero-cta-row">
+          <PlayBadge app="deckcam" size="lg" variant="badge" />
+          <div class="pkg-info mono">
+            <span>PACKAGE: com.waygosquad.deckcam</span>
+          </div>
+        </div>
+
+        <div class="spec-pills mono">
+          <span class="pill">TV REMOTE & TOUCH GESTURES</span>
+          <span class="pill">LOCAL LAN ONLY</span>
+          <span class="pill">KEYSTORE ENCRYPTED</span>
+        </div>
+      </div>
+
+      <div class="hero-visual-col reveal">
+        <TvFrame variant="wall" glow={true} class="deckcam-hero-tv">
+          <img
+            src="/screens/14-camera-grid-4.png"
+            alt="DeckCam 4-camera live quad layout on Android TV"
+            width="800"
+            height="450"
+            class="tv-screen-shot"
+            loading="eager"
+            decoding="async"
+          />
+        </TvFrame>
+      </div>
+    </div>
+  </section>
+
+  <!-- Side-by-Side Comparison: DeckTV vs DeckCam -->
+  <Section
+    id="comparison"
+    eyebrow="PRODUCT COMPARISON"
+    title="DeckTV vs. DeckCam: Which is right for you?"
+    lede="Both apps share the same hardened RTSP core, keystore encryption, and multi-camera engine. Choose based on whether you want a full TV launcher or a dedicated camera app."
+    containerWidth="wide"
+  >
+    <div class="comparison-card card reveal">
+      <div class="comp-table-wrap">
+        <table class="comp-table">
+          <thead>
+            <tr>
+              <th class="col-feat mono">FEATURE / CAPABILITY</th>
+              <th class="col-decktv mono">
+                <span class="th-title">DECKTV</span>
+                <span class="th-sub">FULL LAUNCHER</span>
+              </th>
+              <th class="col-deckcam mono">
+                <span class="th-title highlight">DECKCAM</span>
+                <span class="th-sub">STANDALONE APP</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {COMPARISON_TABLE.map((row) => (
+              <tr>
+                <td class="feat-name">{row.feature}</td>
+                <td class="feat-status">
+                  {row.decktv ? (
+                    <span class="check-icon" title="Supported">✓</span>
+                  ) : (
+                    <span class="cross-icon" title="Not available">—</span>
+                  )}
+                </td>
+                <td class="feat-status">
+                  {row.deckcam ? (
+                    <span class="check-icon highlight" title="Supported">✓</span>
+                  ) : (
+                    <span class="cross-icon" title="Not available">—</span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Mobile & TV Dual Experience -->
+  <Section
+    id="mobile-experience"
+    eyebrow="MULTI-DEVICE FORM FACTORS"
+    title="Built for remotes, keyboards, and touchscreens"
+    lede="Seamlessly adapts whether you are navigating with a TV D-pad or pinching to zoom on an Android tablet."
+    containerWidth="wide"
+  >
+    <div class="duo-grid">
+      <div class="duo-card card reveal">
+        <div class="duo-badge mono">FOR SMART TVS & TV BOXES</div>
+        <h3 class="duo-title">Remote & D-Pad Optimized</h3>
+        <p class="duo-desc">
+          Designed from the ground up for Leanback TV navigation. Fluid focus rings, direct 0–9 number jump to zoom into feeds, and color remote shortcut keys.
+        </p>
+        <div class="duo-media">
+          <img
+            src="/screens/13-camera-grid-controls.png"
+            alt="DeckCam controls dock on Android TV"
+            width="640"
+            height="360"
+            class="duo-img"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
+
+      <div class="duo-card card reveal">
+        <div class="duo-badge mono">FOR PHONES & TABLETS</div>
+        <h3 class="duo-title">Touch, Drag & Swipe Gestures</h3>
+        <p class="duo-desc">
+          Tap any camera tile to zoom, swipe horizontally between camera pages, and drag to reorganize camera tiles into your preferred layout order.
+        </p>
+        <div class="duo-figure-wrap">
+          <HairlineFigure figure="phone" label="DeckCam Phone & Tablet" intensity={0.7} />
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- FAQ Section -->
+  <Section
+    id="faq"
+    eyebrow="DECKCAM FAQS"
+    title="Common questions about DeckCam"
+    lede="Got questions about setup, streaming, or running DeckCam alongside your current setup?"
+  >
+    <Faq faqs={deckCamFaqs} />
+  </Section>
+
+  <!-- CTA Banner -->
+  <section class="deckcam-cta-section">
+    <div class="deckcam-cta-container">
+      <div class="cta-inner card card-glow reveal">
+        <h2 class="cta-h2">Download DeckCam for Android</h2>
+        <p class="cta-p">Available free on Google Play. No sign-up, no subscriptions, no cloud servers.</p>
+        <div class="cta-badge-wrap">
+          <PlayBadge app="deckcam" size="lg" variant="badge" />
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .deckcam-hero {
+    padding: 5rem 1.5rem 4rem;
+    position: relative;
+    background: radial-gradient(circle at 70% 30%, rgba(90, 200, 250, 0.08), transparent 60%);
+  }
+
+  .deckcam-hero-container {
+    max-width: var(--max-w-content);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 960px) {
+    .deckcam-hero-container {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+
+  .hero-text-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .app-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.35rem 0.875rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    color: var(--accent);
+    width: fit-content;
+  }
+
+  .hero-pill-icon {
+    border-radius: 4px;
+  }
+
+  .hero-heading {
+    color: var(--text);
+  }
+
+  .highlight {
+    color: var(--accent);
+  }
+
+  .hero-lede {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  .hero-cta-row {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+
+  .pkg-info {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  .spec-pills {
+    display: flex;
+    gap: 0.625rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+
+  .pill {
+    font-size: 0.6875rem;
+    padding: 0.25rem 0.625rem;
+    background: var(--surface-hi);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+  }
+
+  .tv-screen-shot {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Comparison Table */
+  .comparison-card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .comp-table-wrap {
+    overflow-x: auto;
+  }
+
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .comp-table th, .comp-table td {
+    padding: 1.125rem 1.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .comp-table th {
+    background: var(--deep);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+  }
+
+  .th-title {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .th-sub {
+    font-size: 0.6875rem;
+    color: var(--text-dim);
+  }
+
+  .col-feat {
+    width: 50%;
+  }
+
+  .col-decktv, .col-deckcam {
+    width: 25%;
+    text-align: center;
+  }
+
+  .feat-name {
+    font-size: 0.9375rem;
+    color: var(--text);
+  }
+
+  .feat-status {
+    text-align: center;
+  }
+
+  .check-icon {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--green);
+  }
+
+  .check-icon.highlight {
+    color: var(--accent);
+  }
+
+  .cross-icon {
+    color: var(--text-dim);
+  }
+
+  /* Duo Grid */
+  .duo-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 800px) {
+    .duo-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .duo-card {
+    padding: 2.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+  }
+
+  .duo-badge {
+    font-size: 0.6875rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+
+  .duo-title {
+    font-size: 1.35rem;
+    color: var(--text);
+  }
+
+  .duo-desc {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  .duo-media, .duo-figure-wrap {
+    margin-top: 1rem;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: #000;
+    border: 1px solid var(--rule);
+  }
+
+  .duo-figure-wrap {
+    aspect-ratio: 16 / 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--deep);
+  }
+
+  .duo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* CTA Section */
+  .deckcam-cta-section {
+    padding: 5rem 1.5rem 3rem;
+  }
+
+  .deckcam-cta-container {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .cta-inner {
+    padding: 3.5rem 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-lg);
+  }
+
+  .cta-h2 {
+    font-size: 2.25rem;
+    color: var(--text);
+  }
+
+  .cta-p {
+    font-size: 1.125rem;
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  .cta-badge-wrap {
+    margin-top: 0.75rem;
+  }
+</style>

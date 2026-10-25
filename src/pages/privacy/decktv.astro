@@ -1,0 +1,122 @@
+---
+import Prose from '../../layouts/Prose.astro';
+import { SITE_URL, PUBLISHER, CONTACT } from '../../data/site';
+import { getOrganizationSchema, getBreadcrumbSchema } from '../../lib/jsonld';
+
+const jsonLd = [
+  getOrganizationSchema(),
+  getBreadcrumbSchema([
+    { name: 'Home', url: SITE_URL },
+    { name: 'DeckTV Privacy Policy', url: `${SITE_URL}/privacy/decktv` },
+  ]),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'DeckTV Privacy Policy',
+    url: `${SITE_URL}/privacy/decktv`,
+    dateModified: '2026-10-25',
+    publisher: { '@id': `${SITE_URL}/#org` },
+  },
+];
+---
+
+<Prose
+  title="DeckTV Privacy Policy"
+  description="DeckTV does not collect, sell, or share personal data. How the app uses its permissions entirely on-device."
+  path="/privacy/decktv"
+  effectiveDate="25 October 2026"
+  appTitle="DeckTV"
+  packageId="com.waygosquad.decktv"
+  jsonLd={jsonLd}
+>
+  <h2>Summary</h2>
+  <p>
+    DeckTV does not collect, sell or share any personal data. It has no account, no analytics, no ads and no servers. Everything the app does happens on your TV and on your local network.
+  </p>
+
+  <h2>What DeckTV stores, on your TV only</h2>
+  <ul>
+    <li><strong>DVR connection settings:</strong> brand, address, ports, username and RTSP paths. Your DVR <strong>password is encrypted</strong> with a key kept in the Android Keystore on your TV.</li>
+    <li><strong>Your preferences:</strong> layouts, camera order, hidden cameras and apps, dock, start-up input, motion and sleep settings.</li>
+    <li><strong>Snapshots:</strong> snapshots you take are saved as PNG images in your TV's <code>Pictures/CamDeck</code> folder. You can browse and delete them in the app's built-in gallery.</li>
+    <li><strong>"Last played":</strong> the name of the app and the title of the media last playing, so it can be shown on the home screen.</li>
+  </ul>
+  <p>
+    This data never leaves your device. It is excluded from Android cloud backup (<code>allowBackup=false</code>). Clearing the app's data or uninstalling DeckTV removes it, except snapshots you have saved to Pictures.
+  </p>
+
+  <h2>Network connections</h2>
+  <ul>
+    <li>DeckTV connects <strong>only to the DVR/NVR or cameras at the address you enter</strong>, to show their video (RTSP) and read their channel list (HTTP/HTTPS).</li>
+    <li>To grant its own permissions without a computer, DeckTV may connect to your <strong>TV's own debugging service on the device itself (127.0.0.1)</strong>. This happens only when you explicitly choose "Allow everything" in Permissions & setup.</li>
+    <li>DeckTV does not contact {PUBLISHER} or any third-party server.</li>
+  </ul>
+
+  <h2>Permissions and why they're needed</h2>
+  <p>
+    All of the following permissions are processed strictly on your TV. Nothing obtained through them is ever transmitted outside your device.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Permission</th>
+        <th>Why Needed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>INTERNET</code>, network & Wi-Fi state</td>
+        <td>Connect to your DVR on your local network; show the Wi-Fi status on the home bar.</td>
+      </tr>
+      <tr>
+        <td>See all installed apps (<code>QUERY_ALL_PACKAGES</code>)</td>
+        <td>DeckTV is a home-screen launcher, so it must list and open your installed TV applications.</td>
+      </tr>
+      <tr>
+        <td>Usage access (<code>PACKAGE_USAGE_STATS</code>)</td>
+        <td>Optional. Displays your recent and frequently used apps on the home screen.</td>
+      </tr>
+      <tr>
+        <td>Notification access (media)</td>
+        <td>Optional. Android requires it before a launcher can read "Now playing" from other apps. DeckTV reads only media playback info and does not read notification text.</td>
+      </tr>
+      <tr>
+        <td>Run at start-up (<code>RECEIVE_BOOT_COMPLETED</code>)</td>
+        <td>Open your chosen start-up input (for example Camera) when the TV turns on.</td>
+      </tr>
+      <tr>
+        <td>Display over other apps (<code>SYSTEM_ALERT_WINDOW</code>), reorder tasks</td>
+        <td>Return to the front when the TV wakes up.</td>
+      </tr>
+      <tr>
+        <td>System settings (<code>WRITE_SECURE_SETTINGS</code>, via adb)</td>
+        <td>Optional. Used for "Never sleep" (disabling sleep timer and screensaver) and keeping the TV's power-on input synchronized. Original settings restored when turned off.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    You can revoke optional permissions at any time in Android TV Settings → Apps → Special app access. DeckTV continues working without them.
+  </p>
+
+  <h2>Children's Privacy</h2>
+  <p>
+    DeckTV is not directed to children under 13 and knowingly collects no data from anyone.
+  </p>
+
+  <h2>Security</h2>
+  <p>
+    Credentials are encrypted at rest with the hardware-backed Android Keystore. Connections to your DVR use HTTP or HTTPS as you configure. Many DVRs only support unencrypted RTSP on the local subnet, so keep your DVR on a secure, trusted local network.
+  </p>
+
+  <h2>Changes to this Policy</h2>
+  <p>
+    If this policy changes, we will update this page and its effective date. Significant changes will also be noted in the app's release notes on Google Play.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    If you have any questions or concerns regarding this privacy policy, please contact us at: <a href={`mailto:${CONTACT}`}><strong>{CONTACT}</strong></a>
+  </p>
+</Prose>

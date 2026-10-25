@@ -1,0 +1,377 @@
+---
+import TvFrame from '../components/TvFrame.astro';
+---
+
+<section class="boot-section rule-top" id="boot" aria-labelledby="boot-title">
+  <div class="boot-container">
+    <div class="boot-header reveal">
+      <span class="eyebrow mono">SIGNATURE CAPABILITY</span>
+      <h2 id="boot-title" class="boot-heading">
+        Switch on. <span class="accent-text">Cameras on.</span>
+      </h2>
+      <p class="boot-lede">
+        Security surveillance should not require a 5-step remote navigation routine every single morning. Set <strong>Camera</strong> as your Start-up input, and your TV powers on directly into the live camera wall.
+      </p>
+    </div>
+
+    <!-- Interactive Power-On Simulation -->
+    <div class="boot-simulation-grid">
+      <div class="boot-tv-wrap reveal">
+        <TvFrame variant="wall" glow={true} class="boot-tv-frame" id="boot-tv">
+          <div class="boot-screen-sequence" id="boot-screen-sequence">
+            <div class="screen-state state-black" id="screen-black">
+              <div class="cold-label mono">STANDBY</div>
+            </div>
+            <div class="screen-state state-powering" id="screen-powering">
+              <div class="power-glow-pulse"></div>
+              <div class="boot-logo mono">
+                <span class="rec-dot"></span> DECKTV BOOTING TO CAMERA...
+              </div>
+            </div>
+            <div class="screen-state state-live" id="screen-live">
+              <img
+                src="/screens/12-camera-grid-9.png"
+                alt="DeckTV 9-camera live wall active immediately after power-on"
+                width="1280"
+                height="720"
+                class="live-grid-img"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="boot-complete-pill mono">
+                ● LIVE WALL ACTIVE · ZERO CLICKS
+              </div>
+            </div>
+          </div>
+        </TvFrame>
+
+        <div class="boot-sim-controls">
+          <button type="button" class="sim-btn mono" id="sim-power-btn">
+            <span class="btn-led"></span>
+            <span id="sim-btn-text">PRESS TO TEST POWER-ON</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- The 3 Steps to 24/7 Security -->
+      <div class="boot-steps reveal">
+        <div class="step-card card">
+          <div class="step-number mono">01</div>
+          <div class="step-body">
+            <h3 class="step-title">Start-Up Input: Camera</h3>
+            <p class="step-desc">
+              DeckTV configures itself as your TV's start-up source. When AC power or the remote turns the TV on, the system bypasses all menus and loads the video engine immediately.
+            </p>
+          </div>
+        </div>
+
+        <div class="step-card card">
+          <div class="step-number mono">02</div>
+          <div class="step-body">
+            <h3 class="step-title">Never Sleep Mode</h3>
+            <p class="step-desc">
+              No screensavers covering the monitor, no 4-hour energy auto-off dialogs. DeckTV maintains continuous display wakefulness while surveillance feeds are active.
+            </p>
+          </div>
+        </div>
+
+        <div class="step-card card">
+          <div class="step-number mono">03</div>
+          <div class="step-body">
+            <h3 class="step-title">Xiaomi Auto-Play Protection</h3>
+            <p class="step-desc">
+              Xiaomi/PatchWall firmware forces Live TV to play on boot (<code class="code-token">set_auto_play</code>). DeckTV syncs with system properties to keep Live TV from grabbing the display.
+            </p>
+          </div>
+        </div>
+
+        <div class="boot-note card">
+          <div class="note-icon">💡</div>
+          <p class="note-text">
+            <strong>Ideal for retail shops & reception desks:</strong> Staff simply flick the main wall switch in the morning and all DVR cameras are instantly visible to visitors and cashiers.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initBootSim() {
+    const btn = document.getElementById('sim-power-btn');
+    const seq = document.getElementById('boot-screen-sequence');
+    const btnText = document.getElementById('sim-btn-text');
+    if (!btn || !seq || !btnText) return;
+
+    let isPowered = true;
+
+    btn.addEventListener('click', () => {
+      isPowered = !isPowered;
+      if (!isPowered) {
+        seq.classList.add('is-off');
+        seq.classList.remove('is-powering');
+        btnText.textContent = 'POWER ON TV (SWITCH ON)';
+      } else {
+        seq.classList.remove('is-off');
+        seq.classList.add('is-powering');
+        btnText.textContent = 'BOOTING TO CAMERAS...';
+        setTimeout(() => {
+          seq.classList.remove('is-powering');
+          btnText.textContent = 'POWER OFF TV (TEST AGAIN)';
+        }, 1400);
+      }
+    });
+  }
+
+  initBootSim();
+  document.addEventListener('astro:page-load', initBootSim);
+</script>
+
+<style>
+  .boot-section {
+    padding: 6rem 1.5rem;
+    background: linear-gradient(180deg, var(--bg) 0%, #0E1117 100%);
+  }
+
+  .boot-container {
+    max-width: var(--max-w-content);
+    margin: 0 auto;
+  }
+
+  .boot-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .eyebrow {
+    font-size: 0.8125rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    padding: 0.25rem 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-full);
+  }
+
+  .boot-heading {
+    font-size: clamp(2.2rem, 4vw + 1rem, 3.75rem);
+    letter-spacing: -0.025em;
+  }
+
+  .accent-text {
+    color: var(--accent);
+  }
+
+  .boot-lede {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+  }
+
+  .boot-simulation-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .boot-simulation-grid {
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 4rem;
+    }
+  }
+
+  .boot-screen-sequence {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #000;
+  }
+
+  .screen-state {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .state-black {
+    background: #050608;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .cold-label {
+    font-size: 0.875rem;
+    color: #444;
+    letter-spacing: 0.2em;
+  }
+
+  .state-powering {
+    background: #080A0E;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .power-glow-pulse {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(90, 200, 250, 0.4), transparent 70%);
+    filter: blur(20px);
+    animation: pulse-live 1s infinite alternate;
+  }
+
+  .boot-logo {
+    position: relative;
+    font-size: 0.875rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+  }
+
+  .state-live {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .live-grid-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .boot-complete-pill {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    padding: 4px 10px;
+    background: rgba(11, 13, 16, 0.85);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-full);
+    font-size: 0.6875rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+
+  /* Sequence Toggle States */
+  .boot-screen-sequence.is-off .state-black {
+    opacity: 1;
+  }
+
+  .boot-screen-sequence.is-powering .state-powering {
+    opacity: 1;
+  }
+
+  .boot-sim-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+
+  .sim-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.625rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-full);
+    color: var(--text);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .sim-btn:hover {
+    border-color: var(--accent);
+    background: var(--surface-hi);
+  }
+
+  .btn-led {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+  }
+
+  /* Steps List */
+  .boot-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .step-card {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.5rem;
+  }
+
+  .step-number {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-top: 0.2rem;
+  }
+
+  .step-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .step-title {
+    font-size: 1.15rem;
+    color: var(--text);
+  }
+
+  .step-desc {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  .code-token {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--accent);
+    background: var(--surface-hi);
+    padding: 1px 4px;
+    border-radius: 4px;
+  }
+
+  .boot-note {
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: rgba(90, 200, 250, 0.06);
+    border-color: rgba(90, 200, 250, 0.2);
+  }
+
+  .note-icon {
+    font-size: 1.25rem;
+  }
+
+  .note-text {
+    font-size: 0.875rem;
+    color: var(--text);
+    line-height: 1.55;
+    margin: 0;
+  }
+</style>

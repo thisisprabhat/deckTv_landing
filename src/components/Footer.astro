@@ -1,0 +1,230 @@
+---
+import { FOOTER_LINKS, PUBLISHER, CONTACT, PLAY } from '../data/site';
+---
+
+<footer class="site-footer rule-top">
+  <div class="footer-container">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a href="/" class="brand" aria-label="DeckTV Home">
+          <svg viewBox="0 0 108 108" fill="none" class="mark-svg">
+            <rect width="108" height="108" rx="24" fill="#101318" />
+            <path d="M26 30h56v38H26z" stroke="#5AC8FA" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M46 68v10M62 68v10M38 78h32" stroke="#5AC8FA" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="54" cy="49" r="6" fill="#FF453A" />
+          </svg>
+          <span class="brand-name">Deck<span class="brand-accent">TV</span></span>
+        </a>
+        <p class="brand-desc">
+          Your TV is the control room. Minimalist Android TV launcher with an integrated live CCTV viewer, hardware-accelerated grids, and instant boot-to-camera capability.
+        </p>
+        <div class="security-pill mono">
+          <span class="lock-icon">🔒</span> 100% Local · No Cloud · Keystore Encrypted
+        </div>
+      </div>
+
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h4 class="col-title mono">Applications</h4>
+          <ul class="col-list">
+            {FOOTER_LINKS.apps.map((link) => (
+              <li><a href={link.href} class="col-link">{link.label}</a></li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="col-title mono">Privacy & Trust</h4>
+          <ul class="col-list">
+            {FOOTER_LINKS.support.map((link) => (
+              <li><a href={link.href} class="col-link">{link.label}</a></li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="col-title mono">Google Play</h4>
+          <ul class="col-list">
+            <li>
+              <a href={PLAY.decktv} target="_blank" rel="noopener noreferrer" class="col-link">
+                DeckTV for Android TV
+              </a>
+            </li>
+            <li>
+              <a href={PLAY.deckcam} target="_blank" rel="noopener noreferrer" class="col-link">
+                DeckCam for Android
+              </a>
+            </li>
+            <li class="publisher-meta mono">
+              Publisher: {PUBLISHER}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom rule-top">
+      <div class="bottom-left">
+        <p class="copyright">
+          © {new Date().getFullYear()} {PUBLISHER}. All rights reserved.
+        </p>
+        <p class="footnote">
+          Hikvision, Dahua, Uniview, CP Plus and other trademarks are the property of their respective owners. DeckTV is an independent application.
+        </p>
+      </div>
+      <div class="bottom-right">
+        <a href={`mailto:${CONTACT}`} class="contact-link mono">
+          {CONTACT}
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--deep);
+    padding: 5rem 1.5rem 3rem;
+    margin-top: 6rem;
+    position: relative;
+  }
+
+  .footer-container {
+    max-width: var(--max-w-content);
+    margin: 0 auto;
+  }
+
+  .footer-main {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .footer-brand {
+    max-width: 380px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 1.35rem;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+  }
+
+  .mark-svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .brand-name {
+    letter-spacing: -0.02em;
+  }
+
+  .brand-accent {
+    color: var(--accent);
+  }
+
+  .brand-desc {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+  }
+
+  .security-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-full);
+    font-size: 0.6875rem;
+    color: var(--text);
+  }
+
+  .footer-columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2.5rem;
+  }
+
+  .col-title {
+    color: var(--text);
+    font-size: 0.75rem;
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.08em;
+  }
+
+  .col-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+
+  .col-link {
+    font-size: 0.9375rem;
+    color: var(--text-dim);
+    transition: color 0.15s ease;
+  }
+
+  .col-link:hover {
+    color: var(--accent);
+  }
+
+  .publisher-meta {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+  }
+
+  .footer-bottom {
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    justify-content: space-between;
+  }
+
+  .bottom-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .copyright {
+    font-size: 0.875rem;
+    color: var(--text);
+  }
+
+  .footnote {
+    font-size: 0.8125rem;
+    color: var(--text-dim);
+    max-width: 60ch;
+  }
+
+  .contact-link {
+    color: var(--text-dim);
+    font-size: 0.8125rem;
+  }
+
+  .contact-link:hover {
+    color: var(--accent);
+  }
+
+  @media (min-width: 900px) {
+    .footer-main {
+      grid-template-columns: 360px 1fr;
+      gap: 4rem;
+    }
+
+    .footer-bottom {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+</style>

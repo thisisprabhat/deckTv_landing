@@ -1,0 +1,221 @@
+---
+import Base from '../layouts/Base.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import PlayBadge from '../components/PlayBadge.astro';
+
+import { FEATURE_GROUPS, FEATURES } from '../data/features';
+import { SITE_URL } from '../data/site';
+import { getOrganizationSchema, getBreadcrumbSchema } from '../lib/jsonld';
+
+const jsonLd = [
+  getOrganizationSchema(),
+  getBreadcrumbSchema([
+    { name: 'Home', url: SITE_URL },
+    { name: 'Features', url: `${SITE_URL}/features` },
+  ]),
+];
+---
+
+<Base
+  title="Features & Technical Specs — DeckTV & DeckCam CCTV Viewer"
+  description="Every feature: boot-to-camera start-up input, 4/9/All layouts, SD/HD dual streaming, snapshots, remote shortcuts, and Hikvision/Dahua/Uniview support."
+  path="/features"
+  ogImage="/og/og-features.png"
+  jsonLd={jsonLd}
+>
+  <div class="features-page-header">
+    <div class="header-container reveal">
+      <span class="eyebrow mono">TECHNICAL ENCYCLOPEDIA</span>
+      <h1 class="display-title page-title">Complete Feature Catalog</h1>
+      <p class="page-lede">
+        An exhaustive guide to every layout, decoding optimization, remote key binding, and privacy guarantee in DeckTV and DeckCam.
+      </p>
+
+      <div class="header-badges">
+        <PlayBadge app="decktv" variant="pill" />
+        <PlayBadge app="deckcam" variant="pill" />
+      </div>
+    </div>
+  </div>
+
+  <div class="features-layout">
+    <!-- Sticky Desktop Sidebar Navigation -->
+    <aside class="features-toc-sidebar" aria-label="Features Table of Contents">
+      <div class="toc-sticky-box card">
+        <h2 class="toc-title mono">INDEX OF GROUPS</h2>
+        <ul class="toc-list">
+          {FEATURE_GROUPS.map((grp) => (
+            <li>
+              <a href={`#${grp.id}`} class="toc-link">
+                {grp.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Grouped Feature Sections -->
+    <div class="features-main-content">
+      {FEATURE_GROUPS.map((grp) => {
+        const groupFeatures = FEATURES.filter((f) => f.groupId === grp.id);
+        return (
+          <section id={grp.id} class="feature-group-section" aria-labelledby={`grp-${grp.id}-title`}>
+            <div class="group-header">
+              <span class="group-badge mono">GROUP {grp.id.toUpperCase()}</span>
+              <h2 id={`grp-${grp.id}-title`} class="group-title">{grp.title}</h2>
+            </div>
+
+            <div class="group-cards-grid">
+              {groupFeatures.map((feat) => (
+                <FeatureCard feature={feat} />
+              ))}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .features-page-header {
+    padding: 5rem 1.5rem 3rem;
+    border-bottom: 1px solid var(--rule);
+    background: radial-gradient(circle at 50% 0%, rgba(90, 200, 250, 0.08), transparent 70%);
+  }
+
+  .header-container {
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .eyebrow {
+    font-size: 0.8125rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    padding: 0.25rem 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-full);
+  }
+
+  .page-title {
+    color: var(--text);
+  }
+
+  .page-lede {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+  }
+
+  .header-badges {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  /* Two-column layout */
+  .features-layout {
+    max-width: var(--max-w-content);
+    margin: 3.5rem auto 6rem;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  @media (min-width: 960px) {
+    .features-layout {
+      grid-template-columns: 280px 1fr;
+    }
+  }
+
+  /* Sticky sidebar */
+  .features-toc-sidebar {
+    display: none;
+  }
+
+  @media (min-width: 960px) {
+    .features-toc-sidebar {
+      display: block;
+    }
+  }
+
+  .toc-sticky-box {
+    position: sticky;
+    top: 6rem;
+    padding: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+  }
+
+  .toc-title {
+    font-size: 0.75rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    letter-spacing: 0.08em;
+  }
+
+  .toc-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .toc-link {
+    font-size: 0.875rem;
+    color: var(--text-dim);
+    transition: color 0.15s ease;
+  }
+
+  .toc-link:hover {
+    color: var(--accent);
+  }
+
+  /* Main content groups */
+  .features-main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  .feature-group-section {
+    scroll-margin-top: 6rem;
+  }
+
+  .group-header {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 1rem;
+  }
+
+  .group-badge {
+    font-size: 0.6875rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .group-title {
+    font-size: 1.85rem;
+    color: var(--text);
+  }
+
+  .group-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.75rem;
+  }
+</style>

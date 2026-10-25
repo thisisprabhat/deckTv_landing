@@ -1,0 +1,325 @@
+---
+import TvFrame from '../components/TvFrame.astro';
+import CctvOverlay from '../components/CctvOverlay.astro';
+import PlayBadge from '../components/PlayBadge.astro';
+---
+
+<section class="hero-section" id="overview" aria-labelledby="hero-title">
+  <div class="hero-container">
+    <div class="hero-header reveal">
+      <div class="hero-badge mono">
+        <span class="rec-dot"></span>
+        <span>CONTROL ROOM ARCHITECTURE · ANDROID TV</span>
+      </div>
+
+      <h1 id="hero-title" class="display-title hero-title">
+        Your TV is the <span class="highlight">control room</span>.
+      </h1>
+
+      <p class="hero-subtitle">
+        Turn any Android TV into a dedicated multi-camera CCTV wall. DeckTV boots straight into your live camera grid when powered on — no remote or cloud account needed.
+      </p>
+
+      <div class="hero-ctas">
+        <PlayBadge app="decktv" size="lg" variant="badge" />
+        <PlayBadge app="deckcam" size="md" variant="pill" />
+      </div>
+
+      <div class="hero-meta mono">
+        <span>Tested on Mi TV 4A Pro</span>
+        <span class="dot-sep">·</span>
+        <span>1 GB RAM TVs Supported</span>
+        <span class="dot-sep">·</span>
+        <span>Android 9+</span>
+      </div>
+    </div>
+
+    <!-- Live Interactive TV Grid Demo -->
+    <div class="hero-tv-container reveal">
+      <div class="keyboard-hint mono" id="hero-hint">
+        <span class="key-icon">1–9</span> Press keys 1 to 9 to zoom camera · <span class="key-icon">0</span> Return to grid
+      </div>
+
+      <TvFrame variant="stand" glow={true} class="hero-tv-frame">
+        <div class="hero-screen-viewport" id="hero-screen-viewport" data-focused="0">
+          <!-- 9-Up Multi-Camera Tile Grid -->
+          <div class="hero-camera-grid" id="hero-camera-grid">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((cam) => (
+              <div class="camera-tile" data-cam={cam} tabindex="0" role="button" aria-label={`Camera ${cam}`}>
+                <img
+                  src={`/tiles/cam-${cam}.png`}
+                  alt={`Camera ${cam} feed`}
+                  width="426"
+                  height="240"
+                  class="cam-tile-img"
+                  loading="eager"
+                  decoding="async"
+                />
+                <div class="tile-label mono">CAM {String(cam).padStart(2, '0')}</div>
+              </div>
+            ))}
+          </div>
+
+          <!-- CCTV HUD Overlay -->
+          <CctvOverlay cameraLabel="LIVE GRID · 9 CHANNELS" channel={1} />
+        </div>
+      </TvFrame>
+
+      <!-- Live Region for Screen Reader Announcements -->
+      <div id="hero-announcer" class="sr-only" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initHeroKeyboard() {
+    const viewport = document.getElementById('hero-screen-viewport');
+    const announcer = document.getElementById('hero-announcer');
+    const tiles = document.querySelectorAll<HTMLElement>('.camera-tile');
+    if (!viewport) return;
+
+    function focusCamera(num: number) {
+      if (num >= 1 && num <= 9) {
+        viewport.setAttribute('data-focused', String(num));
+        if (announcer) announcer.textContent = `Camera ${num} maximized in full view`;
+      } else {
+        viewport.setAttribute('data-focused', '0');
+        if (announcer) announcer.textContent = 'Returned to 9-camera grid';
+      }
+    }
+
+    tiles.forEach((tile) => {
+      tile.addEventListener('click', () => {
+        const cam = parseInt(tile.dataset.cam || '0', 10);
+        const current = parseInt(viewport.getAttribute('data-focused') || '0', 10);
+        if (current === cam) {
+          focusCamera(0);
+        } else {
+          focusCamera(cam);
+        }
+      });
+    });
+
+    function onKeyDown(e: KeyboardEvent) {
+      // Ignore if typing in form inputs
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)) {
+        return;
+      }
+
+      if (e.key >= '1' && e.key <= '9') {
+        const camNum = parseInt(e.key, 10);
+        const current = parseInt(viewport.getAttribute('data-focused') || '0', 10);
+        if (current === camNum) {
+          focusCamera(0);
+        } else {
+          focusCamera(camNum);
+        }
+      } else if (e.key === '0' || e.key === 'Escape') {
+        focusCamera(0);
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown);
+  }
+
+  initHeroKeyboard();
+  document.addEventListener('astro:page-load', initHeroKeyboard);
+</script>
+
+<style>
+  .hero-section {
+    padding: 5rem 1.5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-container {
+    max-width: var(--max-w-content);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3.5rem;
+  }
+
+  .hero-header {
+    text-align: center;
+    max-width: 860px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.35rem 0.875rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    color: var(--accent);
+  }
+
+  .hero-title {
+    color: var(--text);
+  }
+
+  .highlight {
+    color: var(--accent);
+    position: relative;
+    white-space: nowrap;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+    max-width: 68ch;
+  }
+
+  .hero-ctas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+  }
+
+  .dot-sep {
+    color: var(--rule-strong);
+  }
+
+  /* TV Viewport & Interactive 9-Up Grid */
+  .hero-tv-container {
+    width: 100%;
+    max-width: 1060px;
+    position: relative;
+  }
+
+  .keyboard-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.875rem;
+    background: rgba(23, 26, 31, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .key-icon {
+    display: inline-block;
+    padding: 0.125rem 0.375rem;
+    background: var(--surface-hi);
+    border: 1px solid var(--rule-strong);
+    border-radius: 4px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .hero-screen-viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #000;
+  }
+
+  .hero-camera-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 100%;
+    height: 100%;
+    gap: 2px;
+    background: #0B0D10;
+  }
+
+  .camera-tile {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    cursor: pointer;
+    background: #101318;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), z-index 0.3s ease;
+  }
+
+  .camera-tile:hover {
+    outline: 2px solid var(--accent);
+    z-index: 2;
+  }
+
+  .cam-tile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .tile-label {
+    position: absolute;
+    bottom: 4px;
+    left: 6px;
+    font-size: 0.625rem;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 1px 4px;
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  /* Focus Modes 1–9 */
+  .hero-screen-viewport[data-focused="1"] .camera-tile[data-cam="1"],
+  .hero-screen-viewport[data-focused="2"] .camera-tile[data-cam="2"],
+  .hero-screen-viewport[data-focused="3"] .camera-tile[data-cam="3"],
+  .hero-screen-viewport[data-focused="4"] .camera-tile[data-cam="4"],
+  .hero-screen-viewport[data-focused="5"] .camera-tile[data-cam="5"],
+  .hero-screen-viewport[data-focused="6"] .camera-tile[data-cam="6"],
+  .hero-screen-viewport[data-focused="7"] .camera-tile[data-cam="7"],
+  .hero-screen-viewport[data-focused="8"] .camera-tile[data-cam="8"],
+  .hero-screen-viewport[data-focused="9"] .camera-tile[data-cam="9"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    outline: none;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
+  @media (max-width: 640px) {
+    .hero-section {
+      padding: 3.5rem 1rem 2rem;
+    }
+    .hero-subtitle {
+      font-size: 1.0625rem;
+    }
+  }
+</style>

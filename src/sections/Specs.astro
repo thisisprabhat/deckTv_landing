@@ -1,0 +1,80 @@
+---
+import Section from '../components/Section.astro';
+
+const SPECS = [
+  { label: 'Operating System', value: 'Android TV 9.0+ · Android 9.0+ (Phones & Tablets for DeckCam)' },
+  { label: 'Hardware Baseline', value: '1 GB RAM Smart TVs (Mi TV 4A Pro, Realme TV, TCL, Chromecast with Google TV)' },
+  { label: 'Video Subsystem', value: 'Hardened Media3 RTSP client with TCP interleaved & UDP transport' },
+  { label: 'Supported Codecs', value: 'H.264 / AVC, H.265 / HEVC hardware-accelerated video decoding' },
+  { label: 'Stream Routing', value: 'Sub-stream SD decoding for multi-camera grids · Main HD stream for single focus' },
+  { label: 'Snapshot Output', value: 'Lossless PNG format saved locally to /storage/emulated/0/Pictures/CamDeck' },
+  { label: 'Data Security', value: 'Android Keystore hardware-backed encryption · Zero cloud brokers or telemetry' },
+  { label: 'Package IDs', value: 'DeckTV: com.waygosquad.decktv · DeckCam: com.waygosquad.deckcam' },
+];
+---
+
+<Section
+  id="specs"
+  eyebrow="TECHNICAL SPECIFICATIONS"
+  title="Engineered for reliability on low-cost hardware"
+  lede="Purpose-built to deliver smooth surveillance feeds on everyday smart TVs without stuttering or memory leaks."
+>
+  <div class="specs-table card reveal">
+    <dl class="specs-list">
+      {SPECS.map((spec) => (
+        <div class="spec-row">
+          <dt class="spec-label mono">{spec.label}</dt>
+          <dd class="spec-value">{spec.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</Section>
+
+<style>
+  .specs-table {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .specs-list {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+  }
+
+  .spec-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 1.25rem 1.75rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .spec-row:last-child {
+    border-bottom: none;
+  }
+
+  @media (min-width: 768px) {
+    .spec-row {
+      grid-template-columns: 240px 1fr;
+      align-items: center;
+      gap: 1.5rem;
+    }
+  }
+
+  .spec-label {
+    font-size: 0.8125rem;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+  }
+
+  .spec-value {
+    font-size: 0.9375rem;
+    color: var(--text);
+    line-height: 1.5;
+    margin: 0;
+  }
+</style>

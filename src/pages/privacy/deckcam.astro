@@ -1,0 +1,90 @@
+---
+import Prose from '../../layouts/Prose.astro';
+import { SITE_URL, PUBLISHER, CONTACT } from '../../data/site';
+import { getOrganizationSchema, getBreadcrumbSchema } from '../../lib/jsonld';
+
+const jsonLd = [
+  getOrganizationSchema(),
+  getBreadcrumbSchema([
+    { name: 'Home', url: SITE_URL },
+    { name: 'DeckCam Privacy Policy', url: `${SITE_URL}/privacy/deckcam` },
+  ]),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'DeckCam Privacy Policy',
+    url: `${SITE_URL}/privacy/deckcam`,
+    dateModified: '2026-10-25',
+    publisher: { '@id': `${SITE_URL}/#org` },
+  },
+];
+---
+
+<Prose
+  title="DeckCam Privacy Policy"
+  description="DeckCam collects no personal data and communicates solely with your own DVR or cameras on your private network."
+  path="/privacy/deckcam"
+  effectiveDate="25 October 2026"
+  appTitle="DeckCam"
+  packageId="com.waygosquad.deckcam"
+  jsonLd={jsonLd}
+>
+  <h2>Summary</h2>
+  <p>
+    DeckCam does not collect, sell or share any personal data. It has no account, no analytics, no ads and no servers. It talks only to the cameras or DVR you configure.
+  </p>
+
+  <h2>What DeckCam stores, on your device only</h2>
+  <ul>
+    <li><strong>DVR/camera connection settings:</strong> brand, address, ports, username and stream paths. The <strong>password is encrypted</strong> with a key kept in the Android Keystore.</li>
+    <li><strong>Preferences:</strong> layouts, camera order and visibility, aspect ratios, display and motion settings.</li>
+    <li><strong>Snapshots:</strong> images you capture are saved as PNG files in <code>Pictures/CamDeck</code>. You can delete them directly in the built-in gallery.</li>
+  </ul>
+  <p>
+    This data never leaves your device and is excluded from Android cloud backup (<code>allowBackup=false</code>). Uninstalling the app removes all stored data, except snapshots saved to Pictures.
+  </p>
+
+  <h2>Network connections</h2>
+  <p>
+    DeckCam connects <strong>only to the DVR/NVR or camera addresses you enter</strong>, for video streaming (RTSP) and reading channel lists (HTTP/HTTPS). It does not contact {PUBLISHER} or any third party.
+  </p>
+
+  <h2>Permissions</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Permission</th>
+        <th>Why Needed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>INTERNET</code>, network & Wi-Fi state</td>
+        <td>Connect to your cameras on your local network and display connection status.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    DeckCam asks for no other permissions. It does not access your contacts, location, microphone hardware, or device camera.
+  </p>
+
+  <h2>Children's Privacy</h2>
+  <p>
+    DeckCam is not directed to children under 13 and knowingly collects no data from anyone.
+  </p>
+
+  <h2>Security</h2>
+  <p>
+    Credentials are encrypted at rest with the Android Keystore. Keep your DVR on a trusted private network, because many DVR models transmit video via unencrypted RTSP.
+  </p>
+
+  <h2>Changes to this Policy</h2>
+  <p>
+    Updates will be posted on this page with a new effective date.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    For any questions regarding this policy, please contact: <a href={`mailto:${CONTACT}`}><strong>{CONTACT}</strong></a>
+  </p>
+</Prose>

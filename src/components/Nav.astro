@@ -1,0 +1,268 @@
+---
+import { NAV_LINKS, PLAY } from '../data/site';
+---
+
+<header class="site-header">
+  <div class="nav-container">
+    <a href="/" class="brand" aria-label="DeckTV Home">
+      <div class="brand-icon">
+        <svg viewBox="0 0 108 108" fill="none" class="mark-svg">
+          <rect width="108" height="108" rx="24" fill="#101318" />
+          <path d="M26 30h56v38H26z" stroke="#5AC8FA" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M46 68v10M62 68v10M38 78h32" stroke="#5AC8FA" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="54" cy="49" r="6" fill="#FF453A" />
+        </svg>
+      </div>
+      <span class="brand-name">Deck<span class="brand-accent">TV</span></span>
+      <span class="brand-badge mono">1.0</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav" aria-label="Main Navigation">
+      <ul class="nav-list">
+        {NAV_LINKS.map((link) => (
+          <li>
+            <a href={link.href} class="nav-link">{link.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a href={PLAY.decktv} target="_blank" rel="noopener noreferrer" class="pill-btn get-decktv" aria-label="Get DeckTV on Google Play">
+        <span class="rec-dot"></span>
+        <span>Get DeckTV</span>
+      </a>
+
+      <!-- Mobile Menu Details Toggle -->
+      <details class="mobile-menu">
+        <summary class="mobile-toggle" aria-label="Toggle Navigation Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="menu-icon">
+            <line x1="4" y1="7" x2="20" y2="7" />
+            <line x1="4" y1="12" x2="20" y2="12" />
+            <line x1="4" y1="17" x2="20" y2="17" />
+          </svg>
+        </summary>
+        <div class="mobile-dropdown glass-panel">
+          <ul class="mobile-nav-list">
+            {NAV_LINKS.map((link) => (
+              <li>
+                <a href={link.href} class="mobile-nav-link">{link.label}</a>
+              </li>
+            ))}
+            <li class="mobile-action-item">
+              <a href={PLAY.decktv} target="_blank" rel="noopener noreferrer" class="pill-btn mobile-cta">
+                Get DeckTV on Google Play
+              </a>
+            </li>
+            <li class="mobile-action-item">
+              <a href={PLAY.deckcam} target="_blank" rel="noopener noreferrer" class="pill-btn-secondary mobile-cta">
+                Get DeckCam (Standalone)
+              </a>
+            </li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(11, 13, 16, 0.82);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .nav-container {
+    max-width: var(--max-w-content);
+    margin: 0 auto;
+    padding: 0.875rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .brand-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .mark-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .brand-name {
+    letter-spacing: -0.02em;
+  }
+
+  .brand-accent {
+    color: var(--accent);
+  }
+
+  .brand-badge {
+    font-size: 0.6875rem;
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    background: var(--surface-hi);
+    color: var(--text-dim);
+    border: 1px solid var(--rule);
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+    list-style: none;
+  }
+
+  .nav-link {
+    font-size: 0.9375rem;
+    color: var(--text-dim);
+    font-weight: 400;
+    transition: color 0.15s ease;
+  }
+
+  .nav-link:hover {
+    color: var(--text);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-full);
+    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
+  }
+
+  .pill-btn:hover {
+    border-color: var(--accent);
+    background: var(--surface-hi);
+    transform: translateY(-1px);
+  }
+
+  .pill-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--accent);
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-full);
+  }
+
+  /* Mobile menu details reset */
+  .mobile-menu {
+    position: relative;
+    display: block;
+  }
+
+  .mobile-toggle {
+    list-style: none;
+    cursor: pointer;
+    padding: 0.375rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+  }
+
+  .mobile-toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .menu-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .mobile-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    width: min(300px, 85vw);
+    border-radius: var(--radius);
+    padding: 1rem;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  }
+
+  .mobile-nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .mobile-nav-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    color: var(--text);
+    font-size: 1rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .mobile-nav-link:hover {
+    background: var(--surface-hi);
+  }
+
+  .mobile-action-item {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .mobile-cta {
+    width: 100%;
+    justify-content: center;
+  }
+
+  @media (min-width: 768px) {
+    .desktop-nav {
+      display: flex;
+    }
+    .mobile-menu {
+      display: none;
+    }
+  }
+</style>

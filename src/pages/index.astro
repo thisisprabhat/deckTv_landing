@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../sections/Hero.astro';
+import BootToCamera from '../sections/BootToCamera.astro';
+import Problems from '../sections/Problems.astro';
+import Bento from '../sections/Bento.astro';
+import Remote from '../sections/Remote.astro';
+import Compat from '../sections/Compat.astro';
+import DeckCamSection from '../sections/DeckCamSection.astro';
+import Specs from '../sections/Specs.astro';
+import Cta from '../sections/Cta.astro';
+import Section from '../components/Section.astro';
+import Faq from '../components/Faq.astro';
+
+import { FAQS } from '../data/faq';
+import {
+  getOrganizationSchema,
+  getWebSiteSchema,
+  getDeckTvAppSchema,
+  getDeckCamAppSchema,
+  getFaqSchema,
+} from '../lib/jsonld';
+
+const jsonLd = [
+  getOrganizationSchema(),
+  getWebSiteSchema(),
+  getDeckTvAppSchema(),
+  getDeckCamAppSchema(),
+  getFaqSchema(FAQS),
+];
+---
+
+<Base
+  title="DeckTV — Android TV Launcher & Live CCTV Control Room"
+  description="Turn any Android TV into a live CCTV wall. DeckTV boots straight into your cameras — Hikvision, Dahua, CP Plus, RTSP. No cloud, no remote needed."
+  path="/"
+  jsonLd={jsonLd}
+>
+  <Hero />
+  <BootToCamera />
+  <Problems />
+  <Bento />
+  <Remote />
+  <Compat />
+  <DeckCamSection />
+  <Specs />
+  <Section
+    id="faq"
+    eyebrow="FREQUENTLY ASKED QUESTIONS"
+    title="Got questions? We've got answers."
+    lede="Everything you need to know about setting up DeckTV, DVR compatibility, and boot-to-camera."
+  >
+    <Faq faqs={FAQS} />
+  </Section>
+  <Cta />
+</Base>

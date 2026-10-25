@@ -1,0 +1,276 @@
+---
+import Section from '../components/Section.astro';
+import HairlineFigure from '../components/HairlineFigure.astro';
+---
+
+<Section
+  id="remote"
+  eyebrow="REMOTE CONTROL ERGONOMICS"
+  title="Control your cameras without leaving the sofa"
+  lede="No awkward on-screen virtual mice. Every function is mapped directly to standard TV remote keys."
+>
+  <div class="remote-showcase">
+    <!-- Interactive Hairline Remote Figure -->
+    <div class="remote-figure-panel card reveal">
+      <div class="remote-header mono">
+        <span>INTERACTIVE REMOTE</span>
+        <span class="active-status">● HOVER / TAP KEYS</span>
+      </div>
+
+      <div class="remote-mount-wrap">
+        <HairlineFigure figure="remote" label="Interactive Android TV Remote" />
+      </div>
+
+      <div class="remote-feedback mono" id="remote-feedback">
+        <span class="feedback-key" id="feedback-key">PRESS A KEY</span>
+        <span class="feedback-desc" id="feedback-desc">Hover over any button to see its in-app shortcut</span>
+      </div>
+    </div>
+
+    <!-- Shortcut Reference Table -->
+    <div class="shortcut-panel reveal">
+      <div class="shortcut-table card">
+        <div class="table-header mono">
+          <span>KEY</span>
+          <span>ACTION IN DECKTV & DECKCAM</span>
+        </div>
+
+        <div class="table-row" data-row-key="0–9">
+          <div class="key-badge mono">0–9</div>
+          <div class="action-desc">
+            <strong>Direct camera focus</strong>: Open that camera in full screen. Press the same digit again or 0 to return to grid.
+          </div>
+        </div>
+
+        <div class="table-row" data-row-key="OK">
+          <div class="key-badge mono key-accent">OK</div>
+          <div class="action-desc">
+            <strong>Full view</strong> on selected tile. Hold OK opens the camera context menu (Aspect, Listen, Snap, Move).
+          </div>
+        </div>
+
+        <div class="table-row" data-row-key="RED">
+          <div class="key-badge mono key-red">RED</div>
+          <div class="action-desc">
+            <strong>Snapshot All</strong>: Instantly captures full-resolution PNG snapshots of every camera feed to disk.
+          </div>
+        </div>
+
+        <div class="table-row" data-row-key="GREEN">
+          <div class="key-badge mono key-green">GREEN</div>
+          <div class="action-desc">
+            <strong>Reconnect All</strong>: Instantly re-establishes all RTSP stream handshakes if network dropped.
+          </div>
+        </div>
+
+        <div class="table-row" data-row-key="YELLOW">
+          <div class="key-badge mono key-yellow">YELLOW</div>
+          <div class="action-desc">
+            <strong>Next Layout</strong>: Cycles through Quad (Mine) → 9-Up Grid → All Cameras layout modes.
+          </div>
+        </div>
+
+        <div class="table-row" data-row-key="BLUE">
+          <div class="key-badge mono key-blue">BLUE</div>
+          <div class="action-desc">
+            <strong>Listen</strong>: Toggle microphone audio monitoring for the currently highlighted camera.
+          </div>
+        </div>
+
+        <div class="table-row" data-row-key="BACK">
+          <div class="key-badge mono">BACK</div>
+          <div class="action-desc">
+            Show on-screen controls · close menus · return from full-screen to grid. Triple-back returns to home screen.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Section>
+
+<script>
+  function initRemoteSync() {
+    const feedbackKey = document.getElementById('feedback-key');
+    const feedbackDesc = document.getElementById('feedback-desc');
+    const rows = document.querySelectorAll<HTMLElement>('.table-row');
+
+    window.addEventListener('remote-key-hover', ((e: CustomEvent) => {
+      const { key, desc } = e.detail || {};
+      if (feedbackKey && key) feedbackKey.textContent = `KEY: ${key}`;
+      if (feedbackDesc && desc) feedbackDesc.textContent = desc;
+
+      // Highlight corresponding row if found
+      rows.forEach((row) => {
+        const rowKey = row.dataset.rowKey;
+        if (rowKey === key || (rowKey === '0–9' && key >= '0' && key <= '9')) {
+          row.classList.add('is-highlighted');
+        } else {
+          row.classList.remove('is-highlighted');
+        }
+      });
+    }) as EventListener);
+  }
+
+  initRemoteSync();
+  document.addEventListener('astro:page-load', initRemoteSync);
+</script>
+
+<style>
+  .remote-showcase {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  @media (min-width: 960px) {
+    .remote-showcase {
+      grid-template-columns: 360px 1fr;
+      gap: 3.5rem;
+    }
+  }
+
+  .remote-figure-panel {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+  }
+
+  .remote-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.6875rem;
+    color: var(--text-dim);
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.75rem;
+  }
+
+  .active-status {
+    color: var(--accent);
+  }
+
+  .remote-mount-wrap {
+    width: 100%;
+    padding: 1rem 0;
+  }
+
+  .remote-feedback {
+    width: 100%;
+    margin-top: 1.25rem;
+    padding: 0.75rem 1rem;
+    background: var(--deep);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: center;
+  }
+
+  .feedback-key {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .feedback-desc {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* Shortcut Table */
+  .shortcut-table {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .table-header {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    padding: 1rem 1.5rem;
+    background: var(--deep);
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.6875rem;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+
+  .table-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    padding: 1.25rem 1.5rem;
+    align-items: center;
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .table-row:last-child {
+    border-bottom: none;
+  }
+
+  .table-row:hover, .table-row.is-highlighted {
+    background: var(--surface-hi);
+  }
+
+  .key-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    padding: 0.25rem 0.625rem;
+    background: var(--deep);
+    border: 1px solid var(--rule-strong);
+    border-radius: 4px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .key-accent {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .key-red {
+    border-color: var(--live);
+    color: var(--live);
+    background: rgba(255, 69, 58, 0.1);
+  }
+
+  .key-green {
+    border-color: var(--green);
+    color: var(--green);
+    background: rgba(50, 215, 75, 0.1);
+  }
+
+  .key-yellow {
+    border-color: var(--orange);
+    color: var(--orange);
+    background: rgba(255, 159, 10, 0.1);
+  }
+
+  .key-blue {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(90, 200, 250, 0.1);
+  }
+
+  .action-desc {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--text-dim);
+  }
+
+  .action-desc strong {
+    color: var(--text);
+  }
+</style>
