@@ -7,7 +7,7 @@ export default defineConfig({
   site: 'https://decktv.waygosquad.tech',
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('404'),
+      filter: (page) => !page.includes('404') && !page.includes('health'),
     }),
   ],
   trailingSlash: 'never',
